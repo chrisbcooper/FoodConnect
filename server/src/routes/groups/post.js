@@ -3,6 +3,8 @@ import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
+import { upload } from '@app/middleware/upload';
+
 import auth from '@app/middleware';
 import Group from '@app/models/group';
 import User from '@app/models/user';
@@ -15,15 +17,23 @@ router.post('/', [
     auth,
     body('name', 'Name is required').not().isEmpty(),
     body('bio', 'Bio is required').not().isEmpty(),
+    upload.single('image')
 ], async (req, res) => {
 
-    const errors = validationResult(req);
+    const body = Object.assign({},req.body);
+
+    const errors = validationResult(body);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     const userId = req.user.id;
-    const { name, bio, image } = req.body;
+    const { name, bio } = body;
+
+    let image;
+    if(req.file) {
+        image = req.file.location;
+    }
     
     try {
 

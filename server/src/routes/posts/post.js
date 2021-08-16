@@ -26,6 +26,19 @@ router.post('/', [
       return res.status(400).json({ errors: errors.array() });
     }
 
+    let image;
+    if(req.file) {
+        image = req.file.location;
+    } else {
+        return res.status(400).json({
+            errors: [
+                {
+                    'message': 'Image is required'
+                }
+            ]
+        })
+    }
+
     const userID = req.user.id;
     const { caption, group } = body;
 
@@ -55,10 +68,7 @@ router.post('/', [
             }
         }
 
-        let image;
-        if(req.file) {
-            image = req.file.location;
-        }
+        
 
         const post = new Post ({
             user: userID,
