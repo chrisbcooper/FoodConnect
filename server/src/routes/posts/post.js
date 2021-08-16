@@ -4,6 +4,7 @@ import { body, validationResult } from 'express-validator';
 const router = express.Router();
 
 import Post from '@app/models/post';
+import Group from '@app/models/group';
 
 import auth from '@app/middleware';
 
@@ -20,15 +21,43 @@ router.post('/', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const _id = req.user.id;
-    const { caption, image } = req.body;
+    const userID = req.user.id;
+    const { caption, image, group } = req.body;
 
     try {
 
+        if(group) {
+            const postGroup = await Group.findOne({ _id: group });
+            if(!postGroup) {
+                res.status(400).json({
+                    errors: [
+                        {
+                            'message': 'Group does not exist',
+                        }
+                    ]
+                })
+            }
+
+            if(postGroup.users.filter((user) => user.user.toString() === userID).length === 0) {
+                return res.status(400).json({
+                    errors: [
+                        {
+                            'message': 'Cannot post if not in group'
+                        }
+                        
+                    ]
+                })
+            }
+
+        }
+
+
+
         const post = new Post ({
-            user: _id,
+            user: userID,
             caption,
             image,
+            group,
         });
 
         await post.save();
@@ -108,6 +137,31 @@ router.post('/like/:id', auth, async (req, res) => {
                     }
                 ]
             })
+        }
+
+        if(post.group) {
+            const postGroup = await Group.findOne({ _id: post.group });
+            if(!postGroup) {
+                res.status(400).json({
+                    errors: [
+                        {
+                            'message': 'Group does not exist',
+                        }
+                    ]
+                })
+            }
+
+            if(postGroup.users.filter((user) => user.user.toString() === userID).length === 0) {
+                return res.status(400).json({
+                    errors: [
+                        {
+                            'message': 'Cannot like if not in group'
+                        }
+                        
+                    ]
+                })
+            }
+
         }
 
         if(post.likes.filter((like) => like.user.toString() === userID).length > 0) {
@@ -222,6 +276,31 @@ router.post('/comment/:id', [
             })
         }
 
+        if(post.group) {
+            const postGroup = await Group.findOne({ _id: post.group });
+            if(!postGroup) {
+                res.status(400).json({
+                    errors: [
+                        {
+                            'message': 'Group does not exist',
+                        }
+                    ]
+                })
+            }
+
+            if(postGroup.users.filter((user) => user.user.toString() === userID).length === 0) {
+                return res.status(400).json({
+                    errors: [
+                        {
+                            'message': 'Cannot comment if not in group'
+                        }
+                        
+                    ]
+                })
+            }
+
+        }
+
         post.comments.unshift({ 
             user: userID,
             text
@@ -293,6 +372,29 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
         await post.save();
 
         return res.json(post.comments);
+
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({
+            errors: [
+                {
+                message: 'Internal Server Error'
+                }
+            ]
+        })
+    }
+});
+
+// Delete Post
+// Private 
+
+router.delete('/:id', auth, (req, res) => {
+
+
+    const { id } = req.params;
+    const userID = req.user.id;
+
+    try {
 
     } catch (err) {
         console.error(err.message);

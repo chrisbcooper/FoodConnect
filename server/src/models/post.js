@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema(
     image: {
       type: String
     },
-    group_id: {
+    group: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'group',
     },
