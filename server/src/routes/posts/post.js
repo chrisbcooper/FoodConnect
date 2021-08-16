@@ -6,6 +6,8 @@ const router = express.Router();
 import Post from '@app/models/post';
 import Group from '@app/models/group';
 
+import { upload } from '@app/middleware/upload';
+
 import auth from '@app/middleware';
 
 // Create new post
@@ -14,15 +16,18 @@ import auth from '@app/middleware';
 router.post('/', [
     auth,
     body('caption', 'Caption is required').not().isEmpty(),
+    upload.single('image')
 ], async (req, res) => {
 
-    const errors = validationResult(req);
+    const body = Object.assign({},req.body);
+
+    const errors = validationResult(body);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     const userID = req.user.id;
-    const { caption, image, group } = req.body;
+    const { caption, group } = body;
 
     try {
 
@@ -48,10 +53,12 @@ router.post('/', [
                     ]
                 })
             }
-
         }
 
-
+        let image;
+        if(req.file) {
+            image = req.file.location;
+        }
 
         const post = new Post ({
             user: userID,

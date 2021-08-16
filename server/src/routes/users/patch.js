@@ -35,10 +35,7 @@ router.patch('/', [
         if(name) newFields.name = name;
         if(req.file) newFields.image = req.file.location;
 
-        const user = await User.findOne( { _id });
-
-        console.log(req.file);
-        console.log(newFields);
+        const user = await User.findOne({ _id });
 
         if(user) {
             const updatedUser = await User.findOneAndUpdate(
