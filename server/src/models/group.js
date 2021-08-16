@@ -9,9 +9,15 @@ const groupSchema = new mongoose.Schema(
     },
     bio: {
         type: String,
+        required: true
     }, 
     image: {
         type: String
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     },
     users: [
         {
@@ -22,14 +28,6 @@ const groupSchema = new mongoose.Schema(
             join_date: {
                 type: Date,
                 default: Date.now
-            }
-        }
-    ],
-    posts: [
-        {
-            post: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'post'
             }
         }
     ]

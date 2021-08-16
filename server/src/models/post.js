@@ -14,6 +14,10 @@ const postSchema = new mongoose.Schema(
     image: {
       type: String
     },
+    group_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'group',
+    },
     likes: [
       {
         user: {

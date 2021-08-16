@@ -10,7 +10,15 @@ import auth from '@app/middleware';
 // Create new post
 // Private
 
-router.post('/', auth, async (req, res) => {
+router.post('/', [
+    auth,
+    body('caption', 'Caption is required').not().isEmpty(),
+], async (req, res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
     const _id = req.user.id;
     const { caption, image } = req.body;
