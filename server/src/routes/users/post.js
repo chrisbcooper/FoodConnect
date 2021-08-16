@@ -5,6 +5,8 @@ import { body, validationResult } from 'express-validator';
 
 import config from '@app/config';
 
+import User from '@app/models/user';
+
 const router = express.Router();
 
 // Create User

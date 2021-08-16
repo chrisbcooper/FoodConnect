@@ -49,14 +49,6 @@ const userSchema = new mongoose.Schema(
         }
       }
     ],
-    posts: [
-      {
-        post_id: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Post'
-        }
-      }
-    ],
     groups: [
       {
         group_id: {
