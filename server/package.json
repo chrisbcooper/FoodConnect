@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index.js",
+    "dev": "nodemon -r dotenv/config index.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "babel-node": "0.0.1-security",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-root-import": "^6.6.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "mongoose": "^5.13.7",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9"
+  }
+}
