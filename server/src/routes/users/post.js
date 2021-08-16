@@ -4,16 +4,11 @@ import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
 
 import config from '@app/config';
-import auth from '@app/middleware';
 
 const router = express.Router();
 
-import User from '@app/models/user';
-
-router.get('/', (req, res) => {
-    
-    res.send('Users!!');
-});
+// Create User
+// Public Endpoint
 
 router.post('/', [
     body('name', 'Name is required').not().isEmpty(),
@@ -85,27 +80,6 @@ router.post('/', [
             ]
         })
     }
-
-   
-});
-
-router.get('/me', auth, async (req, res) => {
-
-    try {
-
-        const _id = req.user.id;
-        
-        const user = await User.findOne ({
-            _id
-        });
-
-        res.json(user);
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json()
-    }
-
 });
 
 export default router;
