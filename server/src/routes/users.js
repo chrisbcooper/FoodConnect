@@ -1,4 +1,6 @@
-var express = require('express');
+import express from 'express';
+import bcrypt from 'bcrypt';
+
 const router = express.Router();
 
 import User from '@app/models/user';
@@ -14,9 +16,19 @@ router.post('/', async (req, res) => {
         username: 'chriscooper13'
     });
 
-    await user.save();
+    const password = 'password';
 
-    res.json(user);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const isSame =  await bcrypt.compare(password, hash);
+    console.log(isSame)
+
+    // await user.save();
+
+    res.json({
+        'message': 'hello'
+    });
 })
 
 export default router;
