@@ -31,7 +31,8 @@ const userSchema = new mongoose.Schema(
           type: Boolean
         },
         following_since: {
-          type: Date
+          type: Date,
+          default: Date.now,
         }
       }
     ],
@@ -45,7 +46,8 @@ const userSchema = new mongoose.Schema(
           type: Boolean
         },
         follower_since: {
-          type: Date
+          type: Date,
+          default: Date.now,
         }
       }
     ],
