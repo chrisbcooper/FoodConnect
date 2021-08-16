@@ -1,4 +1,3 @@
-
 import config from '@app/config';
 import router from '@app/routes'
 import connectDB from '@app/config/db';

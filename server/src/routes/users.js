@@ -1,8 +1,10 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { body, validationResult } from 'express-validator';
+
 import config from '@app/config';
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
+import auth from '@app/middleware';
 
 const router = express.Router();
 
@@ -76,13 +78,34 @@ router.post('/', [
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
-            error: {
+            errors: [
+                {
                 message: 'Internal Server Error'
-            }
+                }
+            ]
         })
     }
 
    
-})
+});
+
+router.get('/me', auth, async (req, res) => {
+
+    try {
+
+        const _id = req.user.id;
+        
+        const user = await User.findOne ({
+            _id
+        });
+
+        res.json(user);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json()
+    }
+
+});
 
 export default router;
