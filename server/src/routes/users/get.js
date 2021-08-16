@@ -12,7 +12,10 @@ import User from '@app/models/user';
 router.get('/', async (req, res) => {
     
     try {
-        const users = User.find();
+        const users = await User.find({}, {
+            password: 0,
+            email: 0
+        });
 
         res.json(users);
     } catch (err) {
@@ -39,7 +42,17 @@ router.get('/me', auth, async (req, res) => {
         
         const user = await User.findOne ({
             _id
-        });
+        }).select('-password -email');
+
+        if(!user) {
+            res.status(400).json({
+                errors: [
+                    {
+                        'message': 'User not found'
+                    }
+                ]
+            })
+        }
 
         res.json(user);
 
@@ -61,7 +74,7 @@ router.get('/:id', auth, async (req, res) => {
 
         const user = await User.findOne({
             _id
-        });
+        }).select('-password -email');;
 
         if(!user) {
             res.status(400).json({

@@ -6,6 +6,8 @@ import { body, validationResult } from 'express-validator';
 import config from '@app/config';
 
 import User from '@app/models/user';
+import Post from '@app/models/post';
+import Group from '@app/models/group';
 import auth from '@app/middleware';
 
 const router = express.Router();
@@ -95,7 +97,11 @@ router.post('/:id/follow', auth, async (req, res) => {
 
     try {
 
-        const currUser = await User.findOne({ _id: userID });
+        const currUser = await User.findOne({ _id: userID }, 
+            {
+                email: 0,
+                password: 0
+            });
         const followUser = await User.findOne({ _id: id });
 
         if(!followUser || !currUser) {
@@ -149,7 +155,10 @@ router.post('/:id/unfollow', auth, async (req, res) => {
 
     try {
 
-        const currUser = await User.findOne({ _id: userID });
+        const currUser = await User.findOne({ _id: userID }, {
+            email: 0,
+            password: 0
+        });
         const followUser = await User.findOne({ _id: id });
 
         if(!followUser || !currUser) {
@@ -194,5 +203,91 @@ router.post('/:id/unfollow', auth, async (req, res) => {
     }
 
 });
+
+// Delete User
+// Private 
+
+router.delete('', auth, async (req, res) => {
+
+    const userID = req.user.id;
+
+    try {
+
+        const user = await User.findOne({ _id: userID });
+
+        if(!user) {
+            return res.status(400).json({
+                error: {
+                    message: 'User does not exist'
+                }
+            })
+        }
+
+        await Post.deleteMany({
+            'user': userID
+        });
+
+        const groups = user.groups.map((group) => group.group.toString());
+
+        await Group.updateMany( {
+            '_id': groups
+        }, {
+            $pull: {
+                'users': {
+                    user: userID
+                }
+            },
+
+        });
+
+        await Group.updateMany({
+            'owner': userID
+        }, {
+            $set: {
+               'owner': undefined 
+            }
+        });
+
+        const following = user.following.map((user) => user.following_id.toString());
+        const followers = user.followers.map((user) => user.follower_id.toString());
+
+        await User.updateMany({ 
+            '_id': following
+        }, {
+            $pull: {
+                'followers': {
+                    follower_id: userID
+                }
+            }
+        })
+
+        await User.updateMany({ 
+            '_id': followers
+        }, {
+            $pull: {
+                'following': {
+                    following_id: userID
+                }
+            }
+        })
+
+        await User.deleteOne({
+            _id: userID
+        });
+
+        res.json({
+            'message': 'SUCCESS'
+        })
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({
+            errors: [
+                {
+                message: 'Internal Server Error'
+                }
+            ]
+        })
+    }
+})
 
 export default router;
