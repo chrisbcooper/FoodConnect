@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
+import { upload } from '@app/middleware/upload';
 
 import config from '@app/config';
 
@@ -11,6 +12,7 @@ import Group from '@app/models/group';
 import auth from '@app/middleware';
 
 const router = express.Router();
+
 
 // Create User
 // Public Endpoint
@@ -22,14 +24,17 @@ router.post('/', [
       'password',
       'Please enter a password with 6 or more characters'
     ).isLength({ min: 6 }),
+    upload.single('image')
   ], async (req, res) => {
+    
+    const body = Object.assign({},req.body);
 
-    const errors = validationResult(req);
+    const errors = validationResult(body);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name } = req.body;
+    const { email, password, name } = body;
 
     try {
 
@@ -42,11 +47,17 @@ router.post('/', [
                 }
             })
         }
+
+        let image;
+        if (req.file != undefined) {
+            image = req.file.location;
+        }
     
         const newUser = new User({
             name,
             password,
-            email
+            email,
+            image
         });
     
         const password = 'password';
@@ -56,7 +67,7 @@ router.post('/', [
     
         newUser.password = hash;
 
-        newUser.save();
+        await newUser.save();
     
         const payload = {
             user: {

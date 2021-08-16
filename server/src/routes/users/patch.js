@@ -4,12 +4,19 @@ import auth from '@app/middleware';
 
 import User from '@app/models/user';
 
+import { upload } from '@app/middleware/upload';
+
 const router = express.Router();
 
 // Create User
 // Private Endpoint
 
-router.patch('/', auth , async (req, res) => {
+router.patch('/', [
+    auth,
+    upload.single('image')
+] , async (req, res) => {
+
+    const body = Object.assign({},req.body);
 
     try {
 
@@ -19,15 +26,19 @@ router.patch('/', auth , async (req, res) => {
             bio,
             image,
             name,
-        } = req.body;
+        } = body;
     
         const newFields = {};
 
         if(bio) newFields.bio = bio;
         if(image) newFields.image = image;
         if(name) newFields.name = name;
+        if(req.file) newFields.image = req.file.location;
 
         const user = await User.findOne( { _id });
+
+        console.log(req.file);
+        console.log(newFields);
 
         if(user) {
             const updatedUser = await User.findOneAndUpdate(
