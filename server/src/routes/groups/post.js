@@ -6,6 +6,7 @@ const router = express.Router();
 import auth from '@app/middleware';
 import Group from '@app/models/group';
 import User from '@app/models/user';
+import Post from '@app/models/post';
 
 // Create a group
 // Private
@@ -181,6 +182,73 @@ router.post('/:id/unfollow', auth , async (req, res) => {
         await user.save();
         
         return res.json(user);
+
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({
+            errors: [
+                {
+                message: 'Internal Server Error'
+                }
+            ]
+        })
+    }
+});
+
+// Delete Group
+// Private
+
+router.delete('/:id', auth, async (req, res) => {
+
+    const { id } = req.params;
+    const userID = req.user.id;
+
+    try {
+
+        const group = await Group.findOne({ _id: id });
+
+        if(!group) {
+            return res.status(400).json({
+                errors: [
+                    {
+                    message: 'Group does not exist'
+                    }
+                ]
+            })
+        };
+
+        if(group.owner.toString() !== userID) {
+            return res.status(400).json({
+                errors: [
+                    {
+                    message: 'Cannot delete if not owner'
+                    }
+                ]
+            })
+        }
+
+        const users = group.users.map((user) => user.user.toString());
+
+
+        await User.updateMany( {
+            '_id': users
+        }, {
+            $pull: {
+                "groups": {
+                    group: group._id.toString()
+                }
+            }
+        });
+
+        await Post.deleteMany({
+            'group': group._id.toString()
+        })
+
+        await Group.deleteOne({ _id: id });
+
+        return res.json({
+            'message': 'SUCCESS'
+        })
 
     } catch (err) {
         console.error(err.message);

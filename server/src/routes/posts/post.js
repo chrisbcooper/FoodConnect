@@ -385,28 +385,4 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
     }
 });
 
-// Delete Post
-// Private 
-
-router.delete('/:id', auth, (req, res) => {
-
-
-    const { id } = req.params;
-    const userID = req.user.id;
-
-    try {
-
-    } catch (err) {
-        console.error(err.message);
-        return res.status(500).json({
-            errors: [
-                {
-                message: 'Internal Server Error'
-                }
-            ]
-        })
-    }
-});
-
-
 export default router;
