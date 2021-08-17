@@ -77,11 +77,13 @@ router.get('/me', auth, async (req, res) => {
 // Get specific group
 // Public
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
+
+    const { id } = req.params;
 
     try {
-        const groups = await Group.find();
-        return res.json(groups);
+        const group = await Group.findOne({ _id: id });
+        return res.json(group);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({

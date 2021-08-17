@@ -104,6 +104,16 @@ router.post('/:id/follow', auth , async (req, res) => {
 
         const group = await Group.findOne({ _id: id });
 
+        if(!group) {
+            return res.status(400).json({
+                errors: [
+                    {
+                    message: 'Group does not exist'
+                    }
+                ]
+            })
+        };
+
         if(group.users.filter((user) => user.user.toString() === userID).length > 0) {
             return res.status(400).json({
                 errors: [

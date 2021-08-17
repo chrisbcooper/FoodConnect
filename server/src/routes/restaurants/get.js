@@ -1,11 +1,13 @@
 import express from 'express';
+import axios from 'axios';
+
+import config from '@app/config';
 
 import Restaurant from '@app/models/restaurant';
-import User from '@app/models/user';
 
 const router = express.Router();
 
-// Get all reviews for Restaurant
+// Get specific restaurant
 // Public
 
 router.get('/:id', async (req, res) => {
@@ -16,10 +18,16 @@ router.get('/:id', async (req, res) => {
         const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if(!restaurant) {
-            restaurant = new Restaurant({
-                yelp_id: id
+
+            //confirming that the ID is a correct yelp id
+            const response = await axios.get(`${config.YELP_URL}/businesses/${id}`,
+                        { headers: {"Authorization" : `Bearer ${config.YELP_API_KEY}`} });
+
+            const newRestaurant = new Restaurant({
+                yelp_id: response.data.id
             });
-            await restaurant.save();
+            await newRestaurant.save();
+            res.json(newRestaurant)
         }
 
         res.json(restaurant);

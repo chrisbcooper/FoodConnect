@@ -49,10 +49,32 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
-// Get current user posts
+// Get specific posts
 // Private
 
 router.get('/:id', auth, async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+        const posts = await Post.find({ _id: id });
+        return res.json(posts);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({
+            errors: [
+                {
+                message: 'Internal Server Error'
+                }
+            ]
+        })
+    }
+});
+
+// Get posts specific to user
+// Private
+
+router.get('/user/:id', auth, async (req, res) => {
 
     const { id } = req.params;
 

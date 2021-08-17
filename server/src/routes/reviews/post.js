@@ -1,7 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 
-import config from '@app/config';
 import { upload } from '@app/middleware/upload';
 
 import User from '@app/models/user';
@@ -31,14 +30,15 @@ router.post('/', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { text, restaurant } = body;
+    const { text } = body;
+    const restaurantID = body.restaurant;
 
     try {
 
         const user = await User.findOne({ _id: userID });
-        const restaurant = await Restaurant.findOne({ _id: restaurant });
+        const restaurant = await Restaurant.findOne({ _id: restaurantID });
 
-        if(!user|| !restaurant) {
+        if(!user || !restaurant) {
             return res.status(400).json({
                 error: {
                     message: 'User or Restaurant not found'
@@ -52,7 +52,7 @@ router.post('/', [
         }
 
         const review = new Review({
-            restaurant_id: restaurant,
+            restaurant_id: restaurant._id,
             text,
             user: userID,
         });
@@ -111,7 +111,7 @@ router.delete('/:id', auth, async (req, res) => {
             })
         }
 
-        const restaurant = await Restaurant.findOne({ _id: review.restaurant });
+        const restaurant = await Restaurant.findOne({ _id: review.restaurant_id });
 
         if(!restaurant) {
             return res.status(400).json({
@@ -194,7 +194,7 @@ router.post('/:id/like', auth, async (req, res) => {
             })
         }
 
-        if(review.likes.filter((like) => like.user.toString() === userID).length > 0) {
+        if(review.likes.filter((like) => like.like.toString() === userID).length > 0) {
             return res.status(400).json({
                 errors: [
                     {
@@ -205,7 +205,7 @@ router.post('/:id/like', auth, async (req, res) => {
             })
         }
 
-        review.likes.unshift({ user: userID });
+        review.likes.unshift({ like: userID });
         await review.save();
 
         return res.json(review.likes);
@@ -245,7 +245,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
             })
         }
 
-        if(review.likes.filter((review) => review.user.toString() === userID).length === 0) {
+        if(review.likes.filter((like) => like.like.toString() === userID).length === 0) {
             return res.status(400).json({
                 errors: [
                     {
@@ -257,7 +257,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
         }
 
         //Get remove index
-        const removeIndex = review.likes.map((like) => like.user.toString()).indexOf(userID);
+        const removeIndex = review.likes.map((like) => like.like.toString()).indexOf(userID);
   
         review.likes.splice(removeIndex, 1);
         await review.save();

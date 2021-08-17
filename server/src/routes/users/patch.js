@@ -8,7 +8,7 @@ import { upload } from '@app/middleware/upload';
 
 const router = express.Router();
 
-// Create User
+// Update User
 // Private Endpoint
 
 router.patch('/', [

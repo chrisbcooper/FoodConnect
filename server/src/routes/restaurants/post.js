@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/:id/addwish', auth, async (req, res) => {
 
     const userID = req.user.id;
-    const { id } = req.params.userID;
+    const { id } = req.params;
 
     try {
 
@@ -72,7 +72,7 @@ router.post('/:id/addwish', auth, async (req, res) => {
 router.post('/:id/removewish', auth, async (req, res) => {
 
     const userID = req.user.id;
-    const { id } = req.params.userID;
+    const { id } = req.params;
 
     try {
 
@@ -108,7 +108,7 @@ router.post('/:id/removewish', auth, async (req, res) => {
         }
 
         const removeRestaurantIndex = restaurant.wishlist.map((usr) => usr.user.toString()).indexOf(userID);
-        const removeUserIndex = user.wishlist.map((rest) => rest.restaurant.toString()).indexOf(restaurant._id);
+        const removeUserIndex = user.wishlist.map((rest) => rest.restaurant.toString()).indexOf(restaurant._id.toString());
   
 
         restaurant.wishlist.splice(removeRestaurantIndex, 1);
@@ -136,7 +136,7 @@ router.post('/:id/removewish', auth, async (req, res) => {
 router.post('/:id/like', auth, async (req, res) => {
 
     const userID = req.user.id;
-    const { id } = req.params.userID;
+    const { id } = req.params;
 
     try {
 
@@ -197,7 +197,7 @@ router.post('/:id/like', auth, async (req, res) => {
 router.post('/:id/unlike', auth, async (req, res) => {
 
     const userID = req.user.id;
-    const { id } = req.params.userID;
+    const { id } = req.params;
 
     try {
 
@@ -221,7 +221,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
             })
         }
 
-        if(restaurant.likes.filter((usr) => usr.user.toString() === userID).length === 0) {
+        if(restaurant.likes.filter((usr) => usr.like.toString() === userID).length === 0) {
             return res.status(400).json({
                 errors: [
                     {
@@ -233,7 +233,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
         }
 
         const removeRestaurantIndex = restaurant.likes.map((like) => like.like.toString()).indexOf(userID);
-        const removeUserIndex = user.liked_restaurants.map((rest) => rest.restaurant.toString()).indexOf(restaurant._id);
+        const removeUserIndex = user.liked_restaurants.map((rest) => rest.restaurant.toString()).indexOf(restaurant._id.toString());
   
 
         restaurant.likes.splice(removeRestaurantIndex, 1);
@@ -260,10 +260,10 @@ router.post('/:id/unlike', auth, async (req, res) => {
 
 // Add user to visited
 // Private
-router.post('/:id/like', auth, async (req, res) => {
+router.post('/:id/addvisit', auth, async (req, res) => {
 
     const userID = req.user.id;
-    const { id } = req.params.userID;
+    const { id } = req.params;
 
     try {
 
@@ -320,10 +320,10 @@ router.post('/:id/like', auth, async (req, res) => {
 
 // Remove user from visited
 // Private
-router.post('/:id/unlike', auth, async (req, res) => {
+router.post('/:id/removevisit', auth, async (req, res) => {
 
     const userID = req.user.id;
-    const { id } = req.params.userID;
+    const { id } = req.params;
 
     try {
 
@@ -351,7 +351,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
             return res.status(400).json({
                 errors: [
                     {
-                        'message': 'Not liked'
+                        'message': 'Not visited yet'
                     }
                     
                 ]
@@ -359,7 +359,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
         }
 
         const removeRestaurantIndex = restaurant.visited.map((usr) => usr.user.toString()).indexOf(userID);
-        const removeUserIndex = user.visited_restaurants.map((rest) => rest.restaurant.toString()).indexOf(restaurant._id);
+        const removeUserIndex = user.visited_restaurants.map((rest) => rest.restaurant.toString()).indexOf(restaurant._id.toString());
   
 
         restaurant.visited.splice(removeRestaurantIndex, 1);
@@ -368,7 +368,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.liked_restaurants);
+        return res.json(user.visited_restaurants);
 
     } catch (err) {
         console.error(err.message);

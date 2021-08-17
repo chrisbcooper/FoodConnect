@@ -60,10 +60,10 @@ export const deleteUser = async (userID, user) => {
     });
 
 
-    const wishlist = user.wishlist.map((user) => user.restaurant.toString());
-    const likelist = user.liked_restaurants.map((user) => user.restaurant.toString());
-    const reviewList = user.reviews.map((user) => user.review.toString());
-    const visitedList = user.visited_restaurants.map((user) => user.restaurant.toString());
+    const wishlist = user.wishlist.map((usr) => usr.restaurant.toString());
+    const likelist = user.liked_restaurants.map((usr) => usr.restaurant.toString());
+    const reviewList = user.reviews.map((usr) => usr.review.toString());
+    const visitedList = user.visited_restaurants.map((usr) => usr.restaurant.toString());
 
     // Remove all restaurant connections
     await Restaurant.updateMany({
@@ -96,15 +96,17 @@ export const deleteUser = async (userID, user) => {
         }
     });
 
-
-    const restaurantList = reviewList.map((review) => review.restaurant_id.toString());
+    const allReviews = await Review.find({
+        _id: reviewList
+    });
+    const restaurantList = allReviews.map((review) => review.restaurant_id.toString());
 
     await Restaurant.updateMany({
         '_id': restaurantList
     }, {
         $pull: {
             'reviews': {
-                review: userID
+                review: reviewList
             }
         }
     });
