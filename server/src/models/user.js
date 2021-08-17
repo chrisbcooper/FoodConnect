@@ -58,6 +58,15 @@ const userSchema = new mongoose.Schema(
           ref: 'Group'
         }
       }
+    ],
+    reviews: [
+      {
+        review: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: 'Review'
+        }
+      }
     ]
   },
   { timestamps: true },
