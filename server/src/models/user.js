@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
- 
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -55,7 +55,8 @@ const userSchema = new mongoose.Schema(
       {
         group: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Group'
+          ref: 'group',
+          required: true
         }
       }
     ],
@@ -63,14 +64,42 @@ const userSchema = new mongoose.Schema(
       {
         review: {
           type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: 'Review'
+          ref: 'review',
+          required: true
+        }
+      }
+    ],
+    wishlist: [
+      {
+        restaurant: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'restaurant',
+          required: true
+        }
+      }
+    ],
+    liked_restaurants: [
+      {
+        restaurant: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'restaurant',
+          required: true
+        }
+      }
+    ],
+    visited_restaurants: [
+      {
+        restaurant: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'restaurant',
+          required: true
         }
       }
     ]
   },
   { timestamps: true },
 );
+
  
 const User = mongoose.model('User', userSchema);
  

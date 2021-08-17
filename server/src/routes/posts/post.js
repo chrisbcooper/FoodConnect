@@ -137,7 +137,7 @@ router.delete('/:id', auth, async (req, res) => {
 // Add a like
 // Private
 
-router.post('/like/:id', auth, async (req, res) => {
+router.post('/:id/like', auth, async (req, res) => {
    
     const userID = req.user.id;
     const { id } = req.params;
@@ -209,10 +209,10 @@ router.post('/like/:id', auth, async (req, res) => {
     }
 });
 
-// Add a like
+// Unlike a post
 // Private
 
-router.post('/unlike/:id', auth, async (req, res) => {
+router.post('/:id/unlike', auth, async (req, res) => {
    
     const userID = req.user.id;
     const { id } = req.params;
@@ -265,7 +265,7 @@ router.post('/unlike/:id', auth, async (req, res) => {
 // Add a comment
 // Private
 
-router.post('/comment/:id', [
+router.post('/:id/comment', [
     auth,
     body('text', 'Text is required').not().isEmpty(),
 ], async (req, res) => {

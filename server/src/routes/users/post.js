@@ -6,9 +6,9 @@ import { upload } from '@app/middleware/upload';
 
 import config from '@app/config';
 
+import { deleteUser } from './delete';
+
 import User from '@app/models/user';
-import Post from '@app/models/post';
-import Group from '@app/models/group';
 import auth from '@app/middleware';
 
 const router = express.Router();
@@ -234,56 +234,10 @@ router.delete('', auth, async (req, res) => {
             })
         }
 
-        await Post.deleteMany({
-            'user': userID
-        });
-
-        const groups = user.groups.map((group) => group.group.toString());
-
-        await Group.updateMany( {
-            '_id': groups
-        }, {
-            $pull: {
-                'users': {
-                    user: userID
-                }
-            },
-
-        });
-
-        await Group.updateMany({
-            'owner': userID
-        }, {
-            $set: {
-               'owner': undefined 
-            }
-        });
-
-        const following = user.following.map((user) => user.following_id.toString());
-        const followers = user.followers.map((user) => user.follower_id.toString());
-
-        await User.updateMany({ 
-            '_id': following
-        }, {
-            $pull: {
-                'followers': {
-                    follower_id: userID
-                }
-            }
-        })
-
-        await User.updateMany({ 
-            '_id': followers
-        }, {
-            $pull: {
-                'following': {
-                    following_id: userID
-                }
-            }
-        })
-
         await User.deleteOne({
             _id: userID
+        }, async (err, result) => {
+            await deleteUser(userID, user);
         });
 
         res.json({

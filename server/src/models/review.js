@@ -9,18 +9,22 @@ const reviewSchema = new mongoose.Schema(
     image: {
         type: String
     },
-    yelp_id: {
+    restaurant_id: {
         type: String,
         required: true,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
         required: true
     },
     likes: [
         {
-            user: mongoose.Schema.Types.ObjectId,
-            required: true
+            like: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user',
+                required: true
+            }
         }
     ]
   },
