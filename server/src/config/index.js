@@ -9,4 +9,6 @@ export default {
     YELP_API_KEY: process.env.YELP_API_KEY,
     YELP_CLIENT_ID: process.env.YELP_CLIENT_ID,
     YELP_URL: process.env.YELP_URL,
+    DB_USERNAME: process.env.DB_USERNAME,
+    DB_PASSWORD: process.env.DB_PASSWORD
 }

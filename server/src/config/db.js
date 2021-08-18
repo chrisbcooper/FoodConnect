@@ -8,6 +8,8 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
+      user: config.DB_USERNAME,
+      pass: config.DB_PASSWORD
     });
 
     console.log('MongoDB connected');
