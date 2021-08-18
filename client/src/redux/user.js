@@ -5,7 +5,6 @@ import { setAuthToken } from '../api/client';
 
 export const loadUser = createAsyncThunk('user/load', async () => {
     setAuthToken(localStorage.token);
-
     const res = await client.get('/auth');
     return res.data;
 });
@@ -32,7 +31,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: {
         token: localStorage.getItem('token'),
-        isAuthenticated: null,
+        isAuthenticated: false,
         isLoading: false,
         data: {},
         error: null,
@@ -72,6 +71,7 @@ export const userSlice = createSlice({
             localStorage.removeItem('token');
             state.error = action.payload;
             state.isLoading = false;
+            state.isAuthenticated = false;
             state.token = null;
         },
         [login.fulfilled]: (state, action) => {
@@ -80,7 +80,6 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             state.token = action.payload.token;
-            loadUser();
         },
         [login.pending]: (state, action) => {
             state.error = null;
@@ -90,6 +89,7 @@ export const userSlice = createSlice({
             localStorage.removeItem('token');
             state.error = action.payload;
             state.isLoading = false;
+            state.isAuthenticated = false;
             state.token = null;
         },
     },

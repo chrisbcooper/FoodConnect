@@ -10,6 +10,8 @@ import User from '@app/models/user';
 
 import auth from '@app/middleware';
 
+import { upload } from '@app/middleware/upload';
+
 // Get User and return token
 // Private
 
