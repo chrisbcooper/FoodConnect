@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { loadUser, register } from '../redux/user';
+import { loadUser } from '../redux/user';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PrivateRoute from '../components/privateRouter';
+
+import Landing from './login';
+import Dashboard from './dashboard';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -10,24 +15,12 @@ const App = () => {
     });
 
     return (
-        <div>
-            Hello!!!
-            <button
-                onClick={async (event) => {
-                    const res = await dispatch(
-                        register({
-                            name: 'Christopher',
-                            email: '1@2.com',
-                            password: 'password',
-                        })
-                    );
-                    const newres = await dispatch(loadUser());
-                    console.log(newres);
-                }}
-            >
-                click me
-            </button>
-        </div>
+        <Router>
+            <Switch>
+                <Route path="/login" component={Landing} />
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+            </Switch>
+        </Router>
     );
 };
 
