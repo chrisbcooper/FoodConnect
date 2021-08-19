@@ -1,0 +1,16 @@
+{
+    "presets": ["@babel/preset-react", "@babel/preset-env"],
+    "plugins": [
+        "@emotion",
+        [
+            "module-resolver",
+            {
+                "root": ["./src"],
+                "alias": {
+                    "@app": "./src",
+                    "@redux": "./src/redux"
+                }
+            }
+        ]
+    ]
+}

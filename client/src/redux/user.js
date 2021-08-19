@@ -31,7 +31,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: {
         token: localStorage.getItem('token'),
-        isAuthenticated: false,
+        isAuthenticated: true,
         isLoading: false,
         data: {},
         error: null,
