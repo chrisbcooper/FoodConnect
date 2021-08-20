@@ -68,9 +68,10 @@ const App = () => {
                             <PrivateRoute exact path='/reviews/restaurant/:id' component={Reviews} />
                             <PrivateRoute exact path='/reviews/:id' component={Review} />
                             <PrivateRoute exact path='/reviews/restaurant/:id/create' component={ReviewCreate} />
+                            <PrivateRoute exact path='/posts/create' component={PostCreate} />
+                            <PrivateRoute exact path='/posts/create/:id' component={PostCreate} />
                             <PrivateRoute exact path='/posts' component={Posts} />
                             <PrivateRoute exact path='/posts/:id' component={Post} />
-                            <PrivateRoute exact path='/posts/create' component={PostCreate} />
                         </Switch>
                     </Container>
                 </OutsideContainer>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SyncLoader from 'react-spinners/SyncLoader';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import { followGroup, loadGroup, unfollowGroup } from '../../redux/groups';
@@ -27,7 +27,7 @@ const Group = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    if (data.groups) {
+    if (data.groups && group.users) {
         isFollowing = group.users.filter((user) => user.user.toString() === data._id).length !== 0;
     }
 
@@ -62,6 +62,8 @@ const Group = () => {
                     Follow
                 </Button>
             )}
+            {}
+            <Link to={`/posts/create/${id}`}>Create post for group</Link>
         </>
     );
 };

@@ -5,6 +5,7 @@ const router = express.Router();
 
 import Post from '@app/models/post';
 import Group from '@app/models/group';
+import User from '@app/models/user';
 
 import { upload } from '@app/middleware/upload';
 
@@ -40,11 +41,10 @@ router.post(
         const userID = req.user.id;
         const { caption, group } = body;
 
-        console.log(userID);
-
         try {
+            let postGroup;
             if (group) {
-                const postGroup = await Group.findOne({ _id: group });
+                postGroup = await Group.findOne({ _id: group.toString() });
                 if (!postGroup) {
                     res.status(400).json({
                         errors: [
@@ -72,6 +72,15 @@ router.post(
                 image,
                 group,
             });
+
+            if (postGroup) {
+                postGroup.posts.unshift({ post: post._id });
+                await postGroup.save();
+            }
+
+            const user = await User.findOne({ _id: userID });
+            user.posts.unshift({ post: post._id });
+            await user.save();
 
             await post.save();
 
@@ -108,6 +117,30 @@ router.delete('/:id', auth, async (req, res) => {
                 ],
             });
         }
+
+        if (post.group) {
+            await Group.updateOne(
+                { _id: post.group },
+                {
+                    $pull: {
+                        posts: {
+                            post: post._id,
+                        },
+                    },
+                }
+            );
+        }
+
+        await User.updateOne(
+            { _id: post.user },
+            {
+                $pull: {
+                    posts: {
+                        post: post._id,
+                    },
+                },
+            }
+        );
 
         await Post.deleteOne({ _id: id });
 
@@ -182,7 +215,7 @@ router.post('/:id/like', auth, async (req, res) => {
         post.likes.unshift({ user: userID });
         await post.save();
 
-        return res.json(post.likes);
+        return res.json(post);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -231,7 +264,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
         post.likes.splice(removeIndex, 1);
         await post.save();
 
-        return res.json(post.likes);
+        return res.json(post);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -299,7 +332,7 @@ router.post('/:id/comment', [auth, body('text', 'Text is required').not().isEmpt
         });
         await post.save();
 
-        return res.json(post.comments);
+        return res.json(post);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -315,7 +348,7 @@ router.post('/:id/comment', [auth, body('text', 'Text is required').not().isEmpt
 // Delete a comment
 // Private
 
-router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+router.delete('/:id/comment/:comment_id', auth, async (req, res) => {
     const userID = req.user.id;
     const { id, comment_id } = req.params;
 
@@ -358,7 +391,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
         post.comments.splice(remove, 1);
         await post.save();
 
-        return res.json(post.comments);
+        return res.json(post);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({

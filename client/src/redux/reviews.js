@@ -28,7 +28,6 @@ export const loadReview = createAsyncThunk('reviews/load_one', async ({ id }) =>
 export const reviewCreate = createAsyncThunk('reviews/create', async ({ text, restaurant, stars, image }) => {
     setFormAuthToken(localStorage.token);
     try {
-        console.log(image);
         const formData = new FormData();
         formData.append('text', text);
         formData.append('restaurant', restaurant);

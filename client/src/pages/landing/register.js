@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { register } from '../../redux/user';
+import { register as reg } from '../../redux/user';
 
 const HeaderDiv = styled.div`
     text-align: center;
@@ -22,7 +22,7 @@ const Register = () => {
     const history = useHistory();
 
     const onSubmit = async (data) => {
-        const res = await dispatch(register(data));
+        const res = await dispatch(reg(data));
         if (res.payload) {
             history.push('/dashboard');
         }

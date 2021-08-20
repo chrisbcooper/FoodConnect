@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from '../../redux/user';
 import SyncLoader from 'react-spinners/SyncLoader';
+import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { Text } from '../../components';
+import { loadPosts } from '../../redux/posts';
 
 const Posts = () => {
     const dispatch = useDispatch();
-    const { data, isLoading, error } = useSelector((state) => state.user);
+    const { posts, isLoading, error } = useSelector((state) => state.posts);
 
     useEffect(() => {
-        dispatch(loadUser());
+        dispatch(loadPosts());
     }, [dispatch]);
 
     if (error) {
@@ -19,7 +21,20 @@ const Posts = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>POSTS</Text>;
+    return (
+        <div>
+            <Link to='/posts/create'>Create Post </Link>
+            {posts.map((item, index) => (
+                <Card key={index} style={{ width: '18rem' }}>
+                    {item.image && <Card.Img variant='top' src={item.image} />}
+                    <Card.Body>
+                        <Card.Title>{item.caption}</Card.Title>
+                        <Link to={`/posts/${item._id}`}>Go to {item.name}</Link>
+                    </Card.Body>
+                </Card>
+            ))}
+        </div>
+    );
 };
 
 export default Posts;
