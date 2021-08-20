@@ -16,7 +16,7 @@ const restaurantSchema = new mongoose.Schema(
                 user: {
                     type: mongoose.Schema.Types.ObjectId,
                     required: true,
-                    ref: 'user',
+                    ref: 'User',
                 },
             },
         ],
@@ -25,7 +25,7 @@ const restaurantSchema = new mongoose.Schema(
                 user: {
                     type: mongoose.Schema.Types.ObjectId,
                     required: true,
-                    ref: 'user',
+                    ref: 'User',
                 },
             },
         ],
@@ -34,7 +34,7 @@ const restaurantSchema = new mongoose.Schema(
                 like: {
                     type: mongoose.Schema.Types.ObjectId,
                     required: true,
-                    ref: 'user',
+                    ref: 'User',
                 },
             },
         ],

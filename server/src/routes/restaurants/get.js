@@ -15,7 +15,12 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const restaurant = await Restaurant.findOne({ yelp_id: id }).populate('reviews.review');
+        const restaurant = await Restaurant.findOne({ yelp_id: id }).populate([
+            'reviews.review',
+            'wishlist.user',
+            'visited.user',
+            'likes.user',
+        ]);
 
         if (!restaurant) {
             //confirming that the ID is a correct yelp id

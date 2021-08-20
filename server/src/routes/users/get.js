@@ -41,7 +41,9 @@ router.get('/me', auth, async (req, res) => {
 
         const user = await User.findOne({
             _id,
-        }).select('-password -email');
+        })
+            .select('-password -email')
+            .populate(['reviews.review']);
 
         if (!user) {
             res.status(400).json({
@@ -69,7 +71,11 @@ router.get('/:id', auth, async (req, res) => {
 
         const user = await User.findOne({
             _id,
-        }).select('-password -email');
+        })
+            .select('-password -email')
+            .populate(['groups.group', 'reviews.review']);
+
+        console.log(user);
 
         if (!user) {
             res.status(400).json({
