@@ -29,9 +29,6 @@ const N = () => {
                 {isAuthenticated && (
                     <Navbar.Collapse id='responsive-navbar-nav'>
                         <Nav className='mr-auto'>
-                            <Nav.Link eventKey={1} as={NavLink} to='/profile'>
-                                Profile
-                            </Nav.Link>
                             <Nav.Link eventKey={1} as={NavLink} to='/profiles'>
                                 Profiles
                             </Nav.Link>
@@ -46,6 +43,9 @@ const N = () => {
                             </Nav.Link>
                             <Nav.Link eventKey={1} as={NavLink} to='/posts'>
                                 Posts
+                            </Nav.Link>
+                            <Nav.Link eventKey={1} as={NavLink} to='/reviews'>
+                                Reviews
                             </Nav.Link>
                             <Nav.Link eventKey={1} onClick={(event) => dispatch(logout())}>
                                 Logout

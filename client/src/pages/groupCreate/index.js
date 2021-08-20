@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from '../../redux/user';
 import SyncLoader from 'react-spinners/SyncLoader';
 import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';

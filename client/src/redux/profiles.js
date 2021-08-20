@@ -17,7 +17,6 @@ export const loadProfiles = createAsyncThunk('profiles/load_all', async () => {
 export const loadProfile = createAsyncThunk('profiles/load', async ({ id }) => {
     setAuthToken(localStorage.token);
     try {
-        console.log(id);
         const res = await client.get(`/users/${id}`);
         return res.data;
     } catch (err) {

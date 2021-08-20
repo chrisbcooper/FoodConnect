@@ -64,6 +64,7 @@ const App = () => {
                             <PrivateRoute exact path='/groups/:id' component={Group} />
                             <PrivateRoute exact path='/restaurants' component={Restaurants} />
                             <PrivateRoute exact path='/restaurants/:id' component={Restaurant} />
+                            <PrivateRoute exact path='/reviews' component={Reviews} />
                             <PrivateRoute exact path='/reviews/restaurant/:id' component={Reviews} />
                             <PrivateRoute exact path='/reviews/:id' component={Review} />
                             <PrivateRoute exact path='/reviews/restaurant/:id/create' component={ReviewCreate} />

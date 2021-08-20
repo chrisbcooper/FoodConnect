@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SyncLoader from 'react-spinners/SyncLoader';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import {
@@ -104,6 +104,7 @@ const Restaurant = () => {
                     Like
                 </Button>
             )}
+            <Link to={`/reviews/restaurant/${id}/create`}>Create Review for Restaurant</Link>
         </Text>
     );
 };

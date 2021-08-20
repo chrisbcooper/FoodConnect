@@ -3,6 +3,8 @@ import userReducer from './user';
 import restaurantReducer from './restaurants';
 import groupReducer from './groups';
 import profileReducer from './profiles';
+import postReducer from './posts';
+import reviewReducer from './reviews';
 
 export const store = configureStore({
     reducer: {
@@ -10,5 +12,7 @@ export const store = configureStore({
         restaurant: restaurantReducer,
         group: groupReducer,
         profile: profileReducer,
+        posts: postReducer,
+        reviews: reviewReducer,
     },
 });

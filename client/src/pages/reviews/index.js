@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from '../../redux/user';
+import { loadReviews } from '../../redux/reviews';
 import SyncLoader from 'react-spinners/SyncLoader';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 
 import { Text } from '../../components';
 
 const Reviews = () => {
     const dispatch = useDispatch();
-    const { data, isLoading, error } = useSelector((state) => state.user);
-    const { id } = useParams();
+    const { reviews, isLoading, error } = useSelector((state) => state.reviews);
 
     useEffect(() => {
-        dispatch(loadUser());
+        dispatch(loadReviews());
     }, [dispatch]);
 
     if (error) {
@@ -21,7 +21,21 @@ const Reviews = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>Reviews {id}</Text>;
+    return (
+        <div>
+            Reviews
+            {reviews &&
+                reviews.map((item, index) => (
+                    <Card key={index} style={{ width: '18rem' }}>
+                        {item.image && <Card.Img variant='top' src={item.image} />}
+                        <Card.Body>
+                            <Card.Title>{item.text}</Card.Title>
+                            <Link to={`/reviews/${item._id}`}>Go to {item.name}</Link>
+                        </Card.Body>
+                    </Card>
+                ))}
+        </div>
+    );
 };
 
 export default Reviews;
