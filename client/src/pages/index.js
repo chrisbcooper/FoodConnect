@@ -31,11 +31,6 @@ import PostCreate from './postCreate';
 import GroupCreate from './groupCreate';
 import Profiles from './profiles';
 
-const OutsideContainer = styled.div`
-    background-color: ${(props) => props.theme.background};
-    padding-bottom: 30px;
-`;
-
 const App = () => {
     const dispatch = useDispatch();
 
@@ -47,33 +42,31 @@ const App = () => {
         <Router>
             <ThemeProvider theme={theme}>
                 <Navbar />
-                <OutsideContainer>
-                    <Container>
-                        <Switch>
-                            <Route exact path='/' component={Landing} />
-                            <Route exact path='/login' component={Login} />
-                            <Route exact path='/register' component={Register} />
-                            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                            <PrivateRoute exact path='/me' component={CurrProfile} />
-                            <PrivateRoute exact path='/profiles/:id' component={Profile} />
-                            <PrivateRoute exact path='/profiles' component={Profiles} />
-                            <PrivateRoute exact path='/explore' component={Explore} />
-                            <PrivateRoute exact path='/groups' component={Groups} />
-                            <PrivateRoute exact path='/groups/create' component={GroupCreate} />
-                            <PrivateRoute exact path='/groups/:id' component={Group} />
-                            <PrivateRoute exact path='/restaurants' component={Restaurants} />
-                            <PrivateRoute exact path='/restaurants/:id' component={Restaurant} />
-                            <PrivateRoute exact path='/reviews' component={Reviews} />
-                            <PrivateRoute exact path='/reviews/restaurant/:id' component={Reviews} />
-                            <PrivateRoute exact path='/reviews/:id' component={Review} />
-                            <PrivateRoute exact path='/reviews/restaurant/:id/create' component={ReviewCreate} />
-                            <PrivateRoute exact path='/posts/create' component={PostCreate} />
-                            <PrivateRoute exact path='/posts/create/:id' component={PostCreate} />
-                            <PrivateRoute exact path='/posts' component={Posts} />
-                            <PrivateRoute exact path='/posts/:id' component={Post} />
-                        </Switch>
-                    </Container>
-                </OutsideContainer>
+                <Container style={{ height: '100%', flexGrow: 1 }}>
+                    <Switch>
+                        <Route exact path='/' component={Landing} />
+                        <Route exact path='/login' component={Login} />
+                        <Route exact path='/register' component={Register} />
+                        <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                        <PrivateRoute exact path='/me' component={CurrProfile} />
+                        <PrivateRoute exact path='/profiles/:id' component={Profile} />
+                        <PrivateRoute exact path='/profiles' component={Profiles} />
+                        <PrivateRoute exact path='/explore' component={Explore} />
+                        <PrivateRoute exact path='/groups' component={Groups} />
+                        <PrivateRoute exact path='/groups/create' component={GroupCreate} />
+                        <PrivateRoute exact path='/groups/:id' component={Group} />
+                        <PrivateRoute exact path='/restaurants' component={Restaurants} />
+                        <PrivateRoute exact path='/restaurants/:id' component={Restaurant} />
+                        <PrivateRoute exact path='/reviews' component={Reviews} />
+                        <PrivateRoute exact path='/reviews/restaurant/:id' component={Reviews} />
+                        <PrivateRoute exact path='/reviews/:id' component={Review} />
+                        <PrivateRoute exact path='/reviews/restaurant/:id/create' component={ReviewCreate} />
+                        <PrivateRoute exact path='/posts/create' component={PostCreate} />
+                        <PrivateRoute exact path='/posts/create/:id' component={PostCreate} />
+                        <PrivateRoute exact path='/posts' component={Posts} />
+                        <PrivateRoute exact path='/posts/:id' component={Post} />
+                    </Switch>
+                </Container>
             </ThemeProvider>
         </Router>
     );

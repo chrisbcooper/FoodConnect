@@ -1,5 +1,5 @@
 import SyncLoader from 'react-spinners/SyncLoader';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const TotalDiv = styled.div`
     height: 100%;
@@ -7,17 +7,16 @@ const TotalDiv = styled.div`
     text-align: center;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: flex;
 `;
 
-const loader = () => {
+const Loader = () => {
+    const theme = useTheme();
     return (
         <TotalDiv>
-            <SyncLoader loading={true} size={20} color='white' />
+            <SyncLoader loading={true} size={20} color={theme.dark_blue} />
         </TotalDiv>
     );
 };
 
-export default loader;
+export default Loader;
