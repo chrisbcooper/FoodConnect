@@ -8,19 +8,18 @@ const router = express.Router();
 // Search restaurants
 // Public
 
-router.get('/', async (req, res) => {
+router.post('/search', async (req, res) => {
     const { text } = req.body;
 
     try {
-        const { data } = await axios.get(`${config.YELP_URL}/businesses/search`,
-        { 
+        const { data } = await axios.get(`${config.YELP_URL}/businesses/search`, {
             headers: {
-                "Authorization" : `Bearer ${config.YELP_API_KEY}`
+                Authorization: `Bearer ${config.YELP_API_KEY}`,
             },
             params: {
                 term: text,
-                location: "Los Angeles"
-            }
+                location: 'Los Angeles',
+            },
         });
 
         res.json(data);
@@ -43,8 +42,9 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const { data } = await axios.get(`${config.YELP_URL}/businesses/${id}`,
-                        { headers: {"Authorization" : `Bearer ${config.YELP_API_KEY}`} });
+        const { data } = await axios.get(`${config.YELP_URL}/businesses/${id}`, {
+            headers: { Authorization: `Bearer ${config.YELP_API_KEY}` },
+        });
         res.json(data);
     } catch (err) {
         console.error(err.message);

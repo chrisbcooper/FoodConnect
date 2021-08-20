@@ -5,6 +5,7 @@ import groupReducer from './groups';
 import profileReducer from './profiles';
 import postReducer from './posts';
 import reviewReducer from './reviews';
+import yelpReducer from './yelp';
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
         profile: profileReducer,
         posts: postReducer,
         reviews: reviewReducer,
+        yelp: yelpReducer,
     },
 });
