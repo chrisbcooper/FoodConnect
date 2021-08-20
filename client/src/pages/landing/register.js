@@ -72,7 +72,7 @@ const Register = () => {
                         })}
                         variant='primary'
                     >
-                        Submit Deal
+                        Register
                     </SubmitButton>
                 </HeaderDiv>
             </>

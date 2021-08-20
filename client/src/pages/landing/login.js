@@ -54,7 +54,7 @@ const Login = () => {
                         })}
                         variant='primary'
                     >
-                        Submit Deal
+                        Login
                     </SubmitButton>
                 </HeaderDiv>
             </>

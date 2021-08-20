@@ -3,11 +3,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client, { setAuthToken } from '../api/client';
 import formClient, { setFormAuthToken } from '../api/clientForm';
 
-export const loadReviews = createAsyncThunk('reviews/load_all', async () => {
+export const loadReviews = createAsyncThunk('reviews/load_all', async ({ sort }) => {
     setAuthToken(localStorage.token);
     try {
-        const res = await client.get('/reviews');
-        return res.data;
+        if (sort === 'all') {
+            const res = await client.get('/reviews');
+            return res.data;
+        } else {
+            const res = await client.get('/reviews/following');
+            return res.data;
+        }
     } catch (err) {
         console.error(err.response.data);
         throw err.response.data.errors;

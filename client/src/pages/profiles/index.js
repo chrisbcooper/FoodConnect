@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadProfiles } from '../../redux/profiles';
-import SyncLoader from 'react-spinners/SyncLoader';
 import { Card, Container } from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
-import { StyledLink, CardBody, RoundImage, TransparentCard } from '../../components';
+import { StyledLink, CardBody, RoundImage, TransparentCard, Loader } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -40,7 +39,7 @@ const Profiles = () => {
     if (error) {
         return <text>Error!!</text>;
     } else if (isLoading) {
-        <SyncLoader loading={true} size={150} />;
+        return <Loader />;
     }
 
     return (
