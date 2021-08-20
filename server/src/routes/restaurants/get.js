@@ -1,6 +1,5 @@
 import express from 'express';
 import axios from 'axios';
-import { body, validationResult } from 'express-validator';
 
 import config from '@app/config';
 
@@ -34,10 +33,10 @@ router.get('/:id', async (req, res) => {
                 name: response.data.name,
             });
             await newRestaurant.save();
-            res.json(newRestaurant);
+            return res.json(newRestaurant);
         }
 
-        res.json(restaurant);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -53,9 +52,10 @@ router.get('/:id', async (req, res) => {
 // Get all restaurants
 // Public
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
+    const { text } = req.body;
     try {
-        const restaurants = await Restaurant.find();
+        const restaurants = await Restaurant.find().sort({ field: 'asc', [text]: -1 });
 
         if (!restaurants) {
             return res.status(400).json({

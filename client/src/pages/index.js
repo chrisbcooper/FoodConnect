@@ -8,6 +8,7 @@ import PrivateRoute from '../components/privateRouter';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 import { Container } from 'react-bootstrap';
+import './index.css';
 
 import Landing from './landing';
 import Login from './landing/login';
@@ -32,9 +33,7 @@ import Profiles from './profiles';
 
 const OutsideContainer = styled.div`
     background-color: ${(props) => props.theme.background};
-    height: 100%;
-    position: absolute;
-    width: 100%;
+    padding-bottom: 30px;
 `;
 
 const App = () => {

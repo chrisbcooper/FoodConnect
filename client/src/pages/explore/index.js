@@ -1,13 +1,54 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadRestaurants } from '../../redux/yelp';
-import SyncLoader from 'react-spinners/SyncLoader';
+import FadeIn from 'react-fade-in';
+
 import { useForm } from 'react-hook-form';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { Text } from '../../components';
+import { Text, Loader } from '../../components';
 
+import styled from 'styled-components';
+
+const TotalDiv = styled.div`
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+`;
+
+const CardImage = styled(Card.Img)`
+    height: 15rem;
+    width: 15rem;
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+`;
+
+const CardBody = styled(Card.Body)`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    word-wrap: break-word;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-align: center;
+    padding: 0;
+    margin: 1rem 1rem;
+`;
+
+const RestaurantCard = styled(Card)`
+    width: 15rem;
+    height: 21rem;
+    margin: auto;
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+`;
 const Explore = () => {
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
@@ -15,8 +56,6 @@ const Explore = () => {
 
     if (error) {
         return <Text>Error!!</Text>;
-    } else if (isLoading) {
-        <SyncLoader loading={true} size={150} />;
     }
 
     const onSearch = (data) => {
@@ -24,28 +63,46 @@ const Explore = () => {
     };
 
     return (
-        <div>
-            <Form>
-                <Form.Label>Caption Text</Form.Label>
-                <Form.Control {...register('text', { required: true })} />
-            </Form>
-            <Button
-                onClick={handleSubmit((data) => {
-                    onSearch(data);
-                })}
+        <TotalDiv>
+            <Form
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleSubmit((data) => {
+                        onSearch(data);
+                    });
+                }}
             >
-                Search
-            </Button>
-            {restaurants &&
-                restaurants.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            {item.name}
-                            <Link to={`/restaurants/${item.id}`}>Go to page</Link>
-                        </div>
-                    );
-                })}
-        </div>
+                <Form.Label>Caption Text</Form.Label>
+                <Form.Control {...register('text', { required: true })} />{' '}
+                <Button
+                    onClick={handleSubmit((data) => {
+                        onSearch(data);
+                    })}
+                >
+                    Search
+                </Button>
+            </Form>
+
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <Container>
+                    <FadeIn childClassName='col' child className='row'>
+                        {restaurants &&
+                            restaurants.map((item, index) => (
+                                <RestaurantCard key={index}>
+                                    <StyledLink to={`/restaurants/${item.id}`}>
+                                        {item.image_url && <CardImage variant='top' src={item.image_url} />}
+                                        <CardBody>
+                                            <Card.Title>{item.name}</Card.Title>
+                                        </CardBody>
+                                    </StyledLink>
+                                </RestaurantCard>
+                            ))}
+                    </FadeIn>
+                </Container>
+            )}
+        </TotalDiv>
     );
 };
 

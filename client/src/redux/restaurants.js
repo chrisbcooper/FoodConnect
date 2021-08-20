@@ -3,10 +3,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../api/client';
 import { setAuthToken } from '../api/client';
 
-export const loadRestaurants = createAsyncThunk('restaurants/load_all', async () => {
+export const loadRestaurants = createAsyncThunk('restaurants/load_all', async ({ sort }) => {
     setAuthToken(localStorage.token);
     try {
-        const res = await client.get('/restaurants');
+        const res = await client.post('/restaurants', {
+            text: sort,
+        });
         return res.data;
     } catch (err) {
         console.error(err.response.data);
