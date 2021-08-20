@@ -193,7 +193,7 @@ router.post('/:id/unfollow', auth, async (req, res) => {
         await group.save();
         await user.save();
 
-        return res.json(user);
+        return res.json(group);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({

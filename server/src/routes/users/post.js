@@ -217,7 +217,7 @@ router.post('/:id/follow', auth, async (req, res) => {
         await currUser.save();
         await followUser.save();
 
-        res.json(currUser);
+        res.json(followUser);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -276,7 +276,7 @@ router.post('/:id/unfollow', auth, async (req, res) => {
         await currUser.save();
         await followUser.save();
 
-        res.json(currUser);
+        res.json(followUser);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({

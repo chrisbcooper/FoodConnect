@@ -16,7 +16,7 @@ const Profile = () => {
     } else if (isLoading) {
         <SyncLoader loading={true} size={150} />;
     }
-    return <div>Profile {data.name}</div>;
+    return <div>Me {data.name}</div>;
 };
 
 export default Profile;

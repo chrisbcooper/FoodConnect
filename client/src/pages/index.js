@@ -10,8 +10,11 @@ import theme from '../theme';
 import { Container } from 'react-bootstrap';
 
 import Landing from './landing';
+import Login from './landing/login';
+import Register from './landing/register';
 import Dashboard from './dashboard';
-import Profile from './profile/profile';
+import CurrProfile from './profile/currProfile';
+import Profile from './profile';
 import Navbar from './navbar';
 import Explore from './explore';
 import Groups from './groups';
@@ -25,6 +28,7 @@ import Posts from './posts';
 import Post from './post';
 import PostCreate from './postCreate';
 import GroupCreate from './groupCreate';
+import Profiles from './profiles';
 
 const OutsideContainer = styled.div`
     background-color: ${(props) => props.theme.background};
@@ -48,8 +52,12 @@ const App = () => {
                     <Container>
                         <Switch>
                             <Route exact path='/' component={Landing} />
+                            <Route exact path='/login' component={Login} />
+                            <Route exact path='/register' component={Register} />
                             <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                            <PrivateRoute exact path='/profile' component={Profile} />
+                            <PrivateRoute exact path='/me' component={CurrProfile} />
+                            <PrivateRoute exact path='/profiles/:id' component={Profile} />
+                            <PrivateRoute exact path='/profiles' component={Profiles} />
                             <PrivateRoute exact path='/explore' component={Explore} />
                             <PrivateRoute exact path='/groups' component={Groups} />
                             <PrivateRoute exact path='/groups/create' component={GroupCreate} />

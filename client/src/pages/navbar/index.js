@@ -32,6 +32,9 @@ const N = () => {
                             <Nav.Link eventKey={1} as={NavLink} to='/profile'>
                                 Profile
                             </Nav.Link>
+                            <Nav.Link eventKey={1} as={NavLink} to='/profiles'>
+                                Profiles
+                            </Nav.Link>
                             <Nav.Link eventKey={1} as={NavLink} to='/explore'>
                                 Explore
                             </Nav.Link>
