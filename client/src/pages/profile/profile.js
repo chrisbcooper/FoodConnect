@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from '../../redux/user';
 import SyncLoader from 'react-spinners/SyncLoader';
 
-import { Text } from '../../components';
-
-const Dashboard = () => {
+const Profile = () => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useSelector((state) => state.user);
 
@@ -14,12 +12,11 @@ const Dashboard = () => {
     }, [dispatch]);
 
     if (error) {
-        return <Text>Error!!</Text>;
+        return <text>Error!!</text>;
     } else if (isLoading) {
         <SyncLoader loading={true} size={150} />;
     }
-
-    return <Text>DASHBOARD</Text>;
+    return <div>Profile {data.name}</div>;
 };
 
-export default Dashboard;
+export default Profile;

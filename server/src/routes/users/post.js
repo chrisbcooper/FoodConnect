@@ -13,6 +13,82 @@ import auth from '@app/middleware';
 
 const router = express.Router();
 
+// Login user
+// Public Endpoint
+
+router.post(
+    '/login',
+    [
+        body('name', 'Name is required').not().isEmpty(),
+        body('email', 'Please include a valid email').isEmail(),
+        body('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
+        upload.single('image'),
+    ],
+    async (req, res) => {
+        const body = Object.assign({}, req.body);
+
+        const errors = validationResult({ body });
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { email, password, name } = body;
+
+        try {
+            const user = await User.findOne({ email });
+
+            if (!user) {
+                return res.status(400).json({
+                    errors: [
+                        {
+                            message: 'User does not exist',
+                        },
+                    ],
+                });
+            }
+
+            const compare = await bcrypt.compare(password, user.password);
+
+            if (!compare) {
+                return res.status(400).json({
+                    errors: [
+                        {
+                            message: 'Invalid credentials',
+                        },
+                    ],
+                });
+            }
+
+            const payload = {
+                user: {
+                    id: user._id,
+                },
+            };
+
+            jwt.sign(
+                payload,
+                config.jwtSecret,
+                {
+                    expiresIn: 3600000,
+                },
+                (err, token) => {
+                    if (err) throw err;
+                    res.json({ token });
+                }
+            );
+        } catch (err) {
+            console.error(err.message);
+            return res.status(500).json({
+                errors: [
+                    {
+                        message: 'Internal Server Error',
+                    },
+                ],
+            });
+        }
+    }
+);
+
 // Create User
 // Public Endpoint
 

@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from '../../redux/user';
 import SyncLoader from 'react-spinners/SyncLoader';
+import { useParams } from 'react-router-dom';
 
 import { Text } from '../../components';
 
-const Dashboard = () => {
+const Review = () => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useSelector((state) => state.user);
+    const { id } = useParams();
 
     useEffect(() => {
         dispatch(loadUser());
@@ -19,7 +21,7 @@ const Dashboard = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>DASHBOARD</Text>;
+    return <Text>Review {id}</Text>;
 };
 
-export default Dashboard;
+export default Review;

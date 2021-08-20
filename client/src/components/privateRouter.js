@@ -5,12 +5,10 @@ import { useSelector } from 'react-redux';
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const { isAuthenticated, isLoading } = useSelector((state) => state.user);
 
-    console.log(isAuthenticated);
-
     return (
         <Route
             {...rest}
-            render={(props) => (!isAuthenticated && !isLoading ? <Redirect to="/login" /> : <Component {...props} />)}
+            render={(props) => (!isAuthenticated && !isLoading ? <Redirect to="/" /> : <Component {...props} />)}
         />
     );
 };

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from '../../redux/user';
 import SyncLoader from 'react-spinners/SyncLoader';
+
+import { loadUser } from '../../redux/user';
 
 import { Text } from '../../components';
 
-const Dashboard = () => {
+const Restaurants = () => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useSelector((state) => state.user);
 
@@ -19,7 +20,7 @@ const Dashboard = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>DASHBOARD</Text>;
+    return <Text>Restaurants</Text>;
 };
 
-export default Dashboard;
+export default Restaurants;

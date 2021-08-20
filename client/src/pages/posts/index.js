@@ -5,7 +5,7 @@ import SyncLoader from 'react-spinners/SyncLoader';
 
 import { Text } from '../../components';
 
-const Dashboard = () => {
+const Posts = () => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useSelector((state) => state.user);
 
@@ -19,7 +19,7 @@ const Dashboard = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>DASHBOARD</Text>;
+    return <Text>POSTS</Text>;
 };
 
-export default Dashboard;
+export default Posts;

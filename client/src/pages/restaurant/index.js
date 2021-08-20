@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from '../../redux/user';
 import SyncLoader from 'react-spinners/SyncLoader';
+import { useParams } from 'react-router-dom';
+
+import { loadUser } from '../../redux/user';
 
 import { Text } from '../../components';
 
-const Dashboard = () => {
+const Restaurant = () => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useSelector((state) => state.user);
+    const { id } = useParams();
+    const load = useCallback(async () => {
+        await dispatch(loadUser());
+    }, []);
 
     useEffect(() => {
-        dispatch(loadUser());
-    }, [dispatch]);
+        load();
+    }, [load]);
 
     if (error) {
         return <Text>Error!!</Text>;
@@ -19,7 +25,7 @@ const Dashboard = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>DASHBOARD</Text>;
+    return <Text>Restaurant {id}</Text>;
 };
 
-export default Dashboard;
+export default Restaurant;
