@@ -28,7 +28,7 @@ const Profile = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    if (profile && data)
+    if (profile.followers && data)
         currFollowing =
             profile.followers.filter((follower) => follower.follower_id.toString() === data._id).length !== 0;
 

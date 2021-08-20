@@ -26,7 +26,7 @@ router.post('/:id/addwish', auth, async (req, res) => {
             });
         }
 
-        const restaurant = await Restaurant.findOne({ _id: id });
+        const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if (!restaurant) {
             return res.status(400).json({
@@ -52,7 +52,7 @@ router.post('/:id/addwish', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.wishlist);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -82,7 +82,7 @@ router.post('/:id/removewish', auth, async (req, res) => {
             });
         }
 
-        const restaurant = await Restaurant.findOne({ _id: id });
+        const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if (!restaurant) {
             return res.status(400).json({
@@ -113,7 +113,7 @@ router.post('/:id/removewish', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.wishlist);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -143,7 +143,7 @@ router.post('/:id/like', auth, async (req, res) => {
             });
         }
 
-        const restaurant = await Restaurant.findOne({ _id: id });
+        const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if (!restaurant) {
             return res.status(400).json({
@@ -169,7 +169,7 @@ router.post('/:id/like', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.liked_restaurants);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -199,7 +199,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
             });
         }
 
-        const restaurant = await Restaurant.findOne({ _id: id });
+        const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if (!restaurant) {
             return res.status(400).json({
@@ -230,7 +230,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.liked_restaurants);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -260,7 +260,7 @@ router.post('/:id/addvisit', auth, async (req, res) => {
             });
         }
 
-        const restaurant = await Restaurant.findOne({ _id: id });
+        const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if (!restaurant) {
             return res.status(400).json({
@@ -286,7 +286,7 @@ router.post('/:id/addvisit', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.visited_restaurants);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({
@@ -316,7 +316,7 @@ router.post('/:id/removevisit', auth, async (req, res) => {
             });
         }
 
-        const restaurant = await Restaurant.findOne({ _id: id });
+        const restaurant = await Restaurant.findOne({ yelp_id: id });
 
         if (!restaurant) {
             return res.status(400).json({
@@ -347,7 +347,7 @@ router.post('/:id/removevisit', auth, async (req, res) => {
         await restaurant.save();
         await user.save();
 
-        return res.json(user.visited_restaurants);
+        return res.json(restaurant);
     } catch (err) {
         console.error(err.message);
         return res.status(500).json({

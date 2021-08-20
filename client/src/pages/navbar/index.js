@@ -44,6 +44,9 @@ const N = () => {
                             <Nav.Link eventKey={1} as={NavLink} to='/restaurants'>
                                 Restaurants
                             </Nav.Link>
+                            <Nav.Link eventKey={1} as={NavLink} to='/posts'>
+                                Posts
+                            </Nav.Link>
                             <Nav.Link eventKey={1} onClick={(event) => dispatch(logout())}>
                                 Logout
                             </Nav.Link>

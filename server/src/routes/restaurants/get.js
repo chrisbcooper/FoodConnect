@@ -78,12 +78,7 @@ router.get('/', async (req, res) => {
 // Get all restaurants
 // Public
 
-router.post('/', [body('restaurants').notEmpty().isArray()], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
+router.get('/', async (req, res) => {
     const { restaurants: restList } = req.body;
 
     try {
