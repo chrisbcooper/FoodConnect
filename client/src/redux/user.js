@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import client from '../api/client';
-import { setAuthToken } from '../api/client';
+import client, { setAuthToken } from '../api/client';
+import formClient from '../api/clientForm';
 
 export const loadUser = createAsyncThunk('user/load', async () => {
     setAuthToken(localStorage.token);
@@ -14,9 +14,16 @@ export const loadUser = createAsyncThunk('user/load', async () => {
     }
 });
 
-export const register = createAsyncThunk('user/register', async ({ email, password, name }) => {
+export const register = createAsyncThunk('user/register', async ({ email, password, name, image }) => {
     try {
-        const res = await client.post('/users', { email, password, name });
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
+        if (image) {
+            formData.append('image', image, image.name);
+        }
+        const res = await formClient.post('/users', formData);
         return res.data;
     } catch (err) {
         console.error(err.response.data);

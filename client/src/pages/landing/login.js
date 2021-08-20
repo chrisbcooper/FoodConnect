@@ -32,7 +32,12 @@ const Login = () => {
         <div>
             LOGIN
             <>
-                <Form>
+                <Form
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        handleSubmit(onSubmit)();
+                    }}
+                >
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control {...register('email', { required: true })} />

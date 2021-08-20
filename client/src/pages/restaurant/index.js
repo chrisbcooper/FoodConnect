@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SyncLoader from 'react-spinners/SyncLoader';
 import { useParams, Link } from 'react-router-dom';
@@ -24,13 +24,10 @@ const Restaurant = () => {
     let wish = false;
     let visited = false;
     let like = false;
-    const load = useCallback(async () => {
-        await dispatch(loadRestaurant({ id }));
-    }, []);
 
     useEffect(() => {
-        load();
-    }, [load]);
+        dispatch(loadRestaurant({ id }));
+    }, [dispatch, id]);
 
     if (error) {
         return <Text>Error!!</Text>;

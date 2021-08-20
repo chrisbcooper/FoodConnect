@@ -4,10 +4,9 @@ import { loadRestaurants } from '../../redux/yelp';
 import FadeIn from 'react-fade-in';
 
 import { useForm } from 'react-hook-form';
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Form, Button, Card, Container } from 'react-bootstrap';
 
-import { Text, Loader } from '../../components';
+import { Text, Loader, CardBody, GridCard, StyledLink, CardImage } from '../../components';
 
 import styled from 'styled-components';
 
@@ -19,40 +18,14 @@ const TotalDiv = styled.div`
     justify-content: center;
 `;
 
-const CardImage = styled(Card.Img)`
-    height: 15rem;
-    width: 15rem;
-`;
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-`;
-
-const CardBody = styled(Card.Body)`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    word-wrap: break-word;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-align: center;
-    padding: 0;
-    margin: 1rem 1rem;
-`;
-
-const RestaurantCard = styled(Card)`
-    width: 15rem;
-    height: 21rem;
-    margin: auto;
-    -moz-box-shadow: 0 0 3px #ccc;
-    -webkit-box-shadow: 0 0 3px #ccc;
-    box-shadow: 0 0 3px #ccc;
-`;
 const Explore = () => {
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
     const { restaurants, isLoading, error } = useSelector((state) => state.yelp);
+
+    useEffect(() => {
+        dispatch(loadRestaurants({ search: 'restaurants' }));
+    }, [dispatch]);
 
     if (error) {
         return <Text>Error!!</Text>;
@@ -64,24 +37,41 @@ const Explore = () => {
 
     return (
         <TotalDiv>
-            <Form
-                onSubmit={(event) => {
-                    event.preventDefault();
-                    handleSubmit((data) => {
-                        onSearch(data);
-                    });
+            <div
+                style={{
+                    marginTop: 20,
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
                 }}
             >
-                <Form.Label>Caption Text</Form.Label>
-                <Form.Control {...register('text', { required: true })} />{' '}
-                <Button
-                    onClick={handleSubmit((data) => {
-                        onSearch(data);
-                    })}
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        width: '50%',
+                        justifyContent: 'center',
+                    }}
                 >
-                    Search
-                </Button>
-            </Form>
+                    <Form
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSubmit(onSearch)();
+                        }}
+                        style={{ width: '80%' }}
+                    >
+                        <Form.Control {...register('text', { required: true })} />
+                    </Form>
+                    <Button
+                        onClick={handleSubmit((data) => {
+                            onSearch(data);
+                        })}
+                        style={{ flex: 1, marginLeft: 10 }}
+                    >
+                        Search
+                    </Button>
+                </div>
+            </div>
 
             {isLoading ? (
                 <Loader />
@@ -90,14 +80,17 @@ const Explore = () => {
                     <FadeIn childClassName='col' child className='row'>
                         {restaurants &&
                             restaurants.map((item, index) => (
-                                <RestaurantCard key={index}>
+                                <GridCard key={index}>
                                     <StyledLink to={`/restaurants/${item.id}`}>
                                         {item.image_url && <CardImage variant='top' src={item.image_url} />}
                                         <CardBody>
                                             <Card.Title>{item.name}</Card.Title>
                                         </CardBody>
+                                        <CardBody>
+                                            <Card.Text>{item.location.city}</Card.Text>
+                                        </CardBody>
                                     </StyledLink>
-                                </RestaurantCard>
+                                </GridCard>
                             ))}
                     </FadeIn>
                 </Container>

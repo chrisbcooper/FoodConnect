@@ -32,6 +32,43 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Get all following users
+// Private endpoint
+
+router.get('/following', auth, async (req, res) => {
+    const userID = req.user.id;
+    try {
+        const user = await User.findOne({
+            _id: userID,
+        });
+
+        const following = user.following.map((item) => {
+            return item.following_id;
+        });
+
+        const users = await User.find(
+            {
+                _id: following,
+            },
+            {
+                email: 0,
+                password: 0,
+            }
+        );
+
+        return res.json(users);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({
+            errors: [
+                {
+                    message: 'Internal Server Error',
+                },
+            ],
+        });
+    }
+});
+
 // Get Current User
 // Private Endpoint
 

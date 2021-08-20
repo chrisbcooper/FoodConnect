@@ -1,38 +1,75 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SyncLoader from 'react-spinners/SyncLoader';
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import FadeIn from 'react-fade-in';
 
-import { Text } from '../../components';
+import { Text, CardBody, CardImage, GridCard, StyledLink, Loader } from '../../components';
 import { loadPosts } from '../../redux/posts';
+
+import styled from 'styled-components';
+
+const TopDiv = styled.div`
+    justify-content: space-between;
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+`;
+
+const LinkP = styled.p`
+    margin-left: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-decoration: ${(props) => (props.selected ? 'underline' : 'none')};
+    :hover {
+        color: #ed1212;
+        cursor: pointer;
+    }
+`;
 
 const Posts = () => {
     const dispatch = useDispatch();
     const { posts, isLoading, error } = useSelector((state) => state.posts);
+    const [sortType, setSortType] = useState('all');
 
     useEffect(() => {
-        dispatch(loadPosts());
-    }, [dispatch]);
+        dispatch(loadPosts({ type: sortType }));
+    }, [dispatch, sortType]);
 
     if (error) {
         return <Text>Error!!</Text>;
     } else if (isLoading) {
-        <SyncLoader loading={true} size={150} />;
+        return <Loader />;
     }
 
     return (
         <div>
-            <Link to='/posts/create'>Create Post </Link>
-            {posts.map((item, index) => (
-                <Card key={index} style={{ width: '18rem' }}>
-                    {item.image && <Card.Img variant='top' src={item.image} />}
-                    <Card.Body>
-                        <Card.Title>{item.caption}</Card.Title>
-                        <Link to={`/posts/${item._id}`}>Go to {item.name}</Link>
-                    </Card.Body>
-                </Card>
-            ))}
+            <TopDiv>
+                <Button as={Link} to='/posts/create'>
+                    Create New Post!
+                </Button>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <LinkP selected={sortType === 'all'} onClick={(event) => setSortType('all')}>
+                        All
+                    </LinkP>
+                    <LinkP selected={sortType === 'following'} onClick={(event) => setSortType('following')}>
+                        Following
+                    </LinkP>
+                </div>
+            </TopDiv>
+            <FadeIn childClassName='col' className='row'>
+                {posts &&
+                    posts.map((item, index) => (
+                        <GridCard key={index}>
+                            <StyledLink to={`/posts/${item._id}`}>
+                                {item.image && <CardImage variant='top' src={item.image} />}
+                                <CardBody>
+                                    <Card.Text>{item.caption}</Card.Text>
+                                </CardBody>
+                            </StyledLink>
+                        </GridCard>
+                    ))}
+            </FadeIn>
         </div>
     );
 };

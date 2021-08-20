@@ -7,7 +7,7 @@ import { Text } from '../../components';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { data, isLoading, error } = useSelector((state) => state.user);
+    const { isLoading, error } = useSelector((state) => state.user);
 
     useEffect(() => {
         dispatch(loadUser());

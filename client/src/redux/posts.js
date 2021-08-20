@@ -3,22 +3,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client, { setAuthToken } from '../api/client';
 import formClient, { setFormAuthToken } from '../api/clientForm';
 
-export const loadPosts = createAsyncThunk('post/load_all', async () => {
+export const loadPosts = createAsyncThunk('post/load_all', async ({ type }) => {
     setAuthToken(localStorage.token);
     try {
-        const res = await client.get('/posts');
-        return res.data;
-    } catch (err) {
-        console.error(err.response.data);
-        throw err.response.data.errors;
-    }
-});
-
-export const loadPostsFollowing = createAsyncThunk('post/load_following', async ({ id }) => {
-    setAuthToken(localStorage.token);
-    try {
-        const res = await client.get(`/posts/following`);
-        return res.data;
+        if (type === 'following') {
+            const res = await client.get(`/posts/following`);
+            return res.data;
+        } else {
+            const res = await client.get('/posts');
+            return res.data;
+        }
     } catch (err) {
         console.error(err.response.data);
         throw err.response.data.errors;
@@ -153,19 +147,6 @@ export const restaurantSlice = createSlice({
             state.isLoading = true;
         },
         [loadPosts.rejected]: (state, action) => {
-            state.error = action.payload;
-            state.isLoading = false;
-        },
-        [loadPostsFollowing.fulfilled]: (state, action) => {
-            state.isLoading = false;
-            state.error = null;
-            state.posts = action.payload;
-        },
-        [loadPostsFollowing.pending]: (state, action) => {
-            state.error = null;
-            state.isLoading = true;
-        },
-        [loadPostsFollowing.rejected]: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },

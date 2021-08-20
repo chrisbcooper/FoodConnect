@@ -5,7 +5,7 @@ import { loadUser } from '../redux/user';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from '../components/privateRouter';
 
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 import { Container } from 'react-bootstrap';
 import './index.css';
@@ -42,7 +42,7 @@ const App = () => {
         <Router>
             <ThemeProvider theme={theme}>
                 <Navbar />
-                <Container style={{ height: '100%', flexGrow: 1 }}>
+                <Container style={{ height: '100%', flexGrow: 1, marginBottom: '30px' }}>
                     <Switch>
                         <Route exact path='/' component={Landing} />
                         <Route exact path='/login' component={Login} />

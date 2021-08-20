@@ -3,11 +3,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../api/client';
 import { setAuthToken } from '../api/client';
 
-export const loadProfiles = createAsyncThunk('profiles/load_all', async () => {
+export const loadProfiles = createAsyncThunk('profiles/load_all', async ({ sort }) => {
     setAuthToken(localStorage.token);
     try {
-        const res = await client.get('/users');
-        return res.data;
+        if (sort === 'all') {
+            const res = await client.get('/users');
+            return res.data;
+        } else {
+            const res = await client.get('/users/following');
+            return res.data;
+        }
     } catch (err) {
         console.error(err.response.data);
         throw err.response.data.errors;
