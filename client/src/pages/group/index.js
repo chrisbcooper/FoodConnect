@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SyncLoader from 'react-spinners/SyncLoader';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
-import { loadUser } from '../../redux/user';
+import { loadGroup } from '../../redux/groups';
 
 import { Text } from '../../components';
+import { deleteGroup } from '../../redux/groups';
 
 const Group = () => {
     const dispatch = useDispatch();
-    const { data, isLoading, error } = useSelector((state) => state.user);
+    const history = useHistory();
+    const { isLoading, error } = useSelector((state) => state.group);
     const { id } = useParams();
 
     useEffect(() => {
-        dispatch(loadUser());
-    }, [dispatch]);
+        dispatch(loadGroup({ id }));
+    }, [dispatch, id]);
 
     if (error) {
         return <Text>Error!!</Text>;
@@ -22,7 +25,21 @@ const Group = () => {
         <SyncLoader loading={true} size={150} />;
     }
 
-    return <Text>Group {id}</Text>;
+    return (
+        <>
+            Group {id}
+            <Button
+                onClick={async (event) => {
+                    const res = await dispatch(deleteGroup({ id }));
+                    if (res.payload) {
+                        history.push('/groups');
+                    }
+                }}
+            >
+                Delete Group
+            </Button>
+        </>
+    );
 };
 
 export default Group;

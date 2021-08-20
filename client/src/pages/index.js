@@ -24,6 +24,7 @@ import ReviewCreate from './reviewCreate';
 import Posts from './posts';
 import Post from './post';
 import PostCreate from './postCreate';
+import GroupCreate from './groupCreate';
 
 const OutsideContainer = styled.div`
     background-color: ${(props) => props.theme.background};
@@ -51,7 +52,8 @@ const App = () => {
                             <PrivateRoute exact path='/profile' component={Profile} />
                             <PrivateRoute exact path='/explore' component={Explore} />
                             <PrivateRoute exact path='/groups' component={Groups} />
-                            <PrivateRoute exact path='/group/:id' component={Group} />
+                            <PrivateRoute exact path='/groups/create' component={GroupCreate} />
+                            <PrivateRoute exact path='/groups/:id' component={Group} />
                             <PrivateRoute exact path='/restaurants' component={Restaurants} />
                             <PrivateRoute exact path='/restaurants/:id' component={Restaurant} />
                             <PrivateRoute exact path='/reviews/restaurant/:id' component={Reviews} />
