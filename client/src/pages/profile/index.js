@@ -76,19 +76,19 @@ const Profile = () => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                        <h3>{profile.followers.length}</h3> <p>Followers</p>
+                        <h3>{profile.followers && profile.followers.length}</h3> <p>Followers</p>
                     </div>
                     <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                        <h3>{profile.following.length}</h3> <p>Following</p>
+                        <h3>{profile.following && profile.following.length}</h3> <p>Following</p>
                     </div>
                     <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                        <h3>{profile.reviews.length}</h3> <p>Reviews</p>
+                        <h3>{profile.reviews && profile.reviews.length}</h3> <p>Reviews</p>
                     </div>
                     <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                        <h3>{profile.posts.length}</h3> <p>Posts</p>
+                        <h3>{profile.posts && profile.posts.length}</h3> <p>Posts</p>
                     </div>
                     <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                        <h3>{profile.visited_restaurants.length}</h3> <p>Visited</p>
+                        <h3>{profile.visited_restaurants && profile.visited_restaurants.length}</h3> <p>Visited</p>
                     </div>
                 </div>
             </TopDiv>

@@ -109,6 +109,7 @@ const Group = () => {
                         {group.posts &&
                             group.posts.map((item, index) => (
                                 <GridCard key={index}>
+                                    {console.log(item)}
                                     <StyledLink to={`/posts/${item.post._id}`}>
                                         {item.post.image && <CardImage variant='top' src={item.post.image} />}
                                         <CardBody>

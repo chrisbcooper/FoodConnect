@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SyncLoader from 'react-spinners/SyncLoader';
 import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { Text, ImageInput } from '../../components';
+import { Text, ImageInput, Loader } from '../../components';
 import { createGroup } from '../../redux/groups';
 import { useHistory } from 'react-router-dom';
 
@@ -29,7 +28,7 @@ const GroupCreate = () => {
     if (error) {
         return <Text>Error!!</Text>;
     } else if (isLoading) {
-        <SyncLoader loading={true} size={150} />;
+        return <Loader />;
     }
 
     const onSubmit = async (data) => {

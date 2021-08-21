@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteReview, likeReview, loadReview, unlikeReview } from '../../redux/reviews';
-import SyncLoader from 'react-spinners/SyncLoader';
 import { useParams } from 'react-router-dom';
 
-import { Text } from '../../components';
+import { Text, Loader } from '../../components';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -24,7 +23,7 @@ const Review = () => {
     if (error) {
         return <Text>Error!!</Text>;
     } else if (isLoading) {
-        <SyncLoader loading={true} size={150} />;
+        return <Loader />;
     }
 
     if (review.likes && data) {
