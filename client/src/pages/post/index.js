@@ -6,6 +6,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment, faTrash } from '@fortawesome/free-solid-svg-icons';
+import FadeIn from 'react-fade-in';
 
 import { Text, Loader } from '../../components';
 
@@ -133,23 +134,29 @@ const Post = () => {
                         </div>
                     )}
                     <div style={{ height: 30 }} />
-                    {post.comments &&
-                        post.comments.map((item, index) => {
-                            return (
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }} key={index}>
-                                    {item.text}
-                                    {item.user === data._id && (
-                                        <Button
-                                            onClick={(event) =>
-                                                dispatch(deleteCommentPost({ id, comment_id: item._id }))
-                                            }
-                                        >
-                                            <FontAwesomeIcon style={{ margin: 'auto' }} size={'1x'} icon={faTrash} />
-                                        </Button>
-                                    )}
-                                </div>
-                            );
-                        })}
+                    <FadeIn>
+                        {post.comments &&
+                            post.comments.map((item, index) => {
+                                return (
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }} key={index}>
+                                        {item.text}
+                                        {item.user === data._id && (
+                                            <Button
+                                                onClick={(event) =>
+                                                    dispatch(deleteCommentPost({ id, comment_id: item._id }))
+                                                }
+                                            >
+                                                <FontAwesomeIcon
+                                                    style={{ margin: 'auto' }}
+                                                    size={'1x'}
+                                                    icon={faTrash}
+                                                />
+                                            </Button>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                    </FadeIn>
                     {isCurr && (
                         <Button
                             onClick={async (event) => {

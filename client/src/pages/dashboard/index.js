@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from '../../redux/user';
-import SyncLoader from 'react-spinners/SyncLoader';
 
-import { Text } from '../../components';
+import { Text, Loader } from '../../components';
+import { Redirect } from 'react-router-dom';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -16,10 +16,10 @@ const Dashboard = () => {
     if (error) {
         return <Text>Error!!</Text>;
     } else if (isLoading) {
-        <SyncLoader loading={true} size={150} />;
+        return <Loader />;
     }
 
-    return <Text>DASHBOARD</Text>;
+    return <Redirect to='/profiles' />;
 };
 
 export default Dashboard;
