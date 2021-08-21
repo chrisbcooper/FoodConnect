@@ -190,7 +190,6 @@ const Restaurant = () => {
                 {restaurant.reviews &&
                     restaurant.reviews.map((item, index) => (
                         <GridCard key={index}>
-                            {console.log(item)}
                             <StyledLink to={`/reviews/${item.review._id}`}>
                                 {item.review.image ? (
                                     <CardImage variant='top' src={item.review.image} />

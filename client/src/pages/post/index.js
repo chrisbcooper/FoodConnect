@@ -65,7 +65,6 @@ const Post = () => {
         <div>
             {post && (
                 <div>
-                    {console.log(post)}
                     <FlexDiv>
                         <div style={{ textAlign: 'center', marginBottom: 20 }}>
                             {post.image && <Image src={post.image} alt='rest' />}

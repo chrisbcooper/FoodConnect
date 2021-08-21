@@ -77,7 +77,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const group = await Group.findOne({ _id: id });
+        const group = await Group.findOne({ _id: id }).populate(['posts.post']);
         if (!group) {
             return res.status(400).json({
                 errors: [
