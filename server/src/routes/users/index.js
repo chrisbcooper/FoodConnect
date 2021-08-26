@@ -2,9 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 
-import getUser from './get';
-import postUser from './post';
-import patchUser from './patch';
+import getUser from './get.js';
+import postUser from './post.js';
+import patchUser from './patch.js';
 
 router.use('', getUser);
 router.use('', postUser);

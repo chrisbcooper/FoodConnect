@@ -3,13 +3,13 @@ import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
-import Post from '@app/models/post';
-import Group from '@app/models/group';
-import User from '@app/models/user';
+import Post from '../../models/post.js';
+import Group from '../../models/group.js';
+import User from '../../models/user.js';
 
-import { upload } from '@app/middleware/upload';
+import { upload } from '../../middleware/upload.js';
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
 // Create new post
 // Private

@@ -2,11 +2,11 @@ import express from 'express';
 
 const router = express.Router();
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
-import Group from '@app/models/group';
-import User from '@app/models/user';
-import Post from '@app/models/post';
+import Group from '../../models/group.js';
+import User from '../../models/user.js';
+import Post from '../../models/post.js';
 
 // Get all groups
 // Public

@@ -2,14 +2,14 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
-import { upload } from '@app/middleware/upload';
+import { upload } from '../../middleware/upload.js';
 
-import config from '@app/config';
+import config from '../../config/index.js';
 
-import { deleteUser } from './delete';
+import { deleteUser } from './delete.js';
 
-import User from '@app/models/user';
-import auth from '@app/middleware';
+import User from '../../models/user.js';
+import auth from '../../middleware/index.js';
 
 const router = express.Router();
 

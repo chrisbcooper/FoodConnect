@@ -29,35 +29,36 @@ const Login = () => {
     };
 
     return (
-        <div>
-            LOGIN
-            <>
-                <Form
-                    onSubmit={(event) => {
-                        event.preventDefault();
-                        handleSubmit(onSubmit)();
-                    }}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ textAlign: 'center', marginTop: 10 }}>
+                <h3>Login</h3>
+            </div>
+            <Form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit(onSubmit)();
+                }}
+            >
+                <input type='submit' style={{ display: 'none' }} />
+                <Form.Group>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control {...register('email', { required: true })} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type='password' {...register('password', { required: true })} />
+                </Form.Group>
+            </Form>
+            <HeaderDiv>
+                <SubmitButton
+                    onClick={handleSubmit((data) => {
+                        onSubmit(data);
+                    })}
+                    variant='primary'
                 >
-                    <Form.Group>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control {...register('email', { required: true })} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type='password' {...register('password', { required: true })} />
-                    </Form.Group>
-                </Form>
-                <HeaderDiv>
-                    <SubmitButton
-                        onClick={handleSubmit((data) => {
-                            onSubmit(data);
-                        })}
-                        variant='primary'
-                    >
-                        Login
-                    </SubmitButton>
-                </HeaderDiv>
-            </>
+                    Login
+                </SubmitButton>
+            </HeaderDiv>
         </div>
     );
 };

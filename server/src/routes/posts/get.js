@@ -1,10 +1,10 @@
 import express from 'express';
 const router = express.Router();
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
-import Post from '@app/models/post';
-import User from '../../models/user';
+import Post from '../../models/post.js';
+import User from '../../models/user.js';
 
 // Get all posts
 // Public

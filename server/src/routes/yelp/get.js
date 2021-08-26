@@ -1,7 +1,7 @@
 import express from 'express';
 import axios from 'axios';
 
-import config from '@app/config';
+import config from '../../config/index.js';
 
 const router = express.Router();
 

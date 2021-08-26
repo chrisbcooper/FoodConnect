@@ -2,8 +2,8 @@ import express from 'express';
 
 const router = express.Router();
 
-import reviewGet from './get';
-import reviewPost from './post';
+import reviewGet from './get.js';
+import reviewPost from './post.js';
 
 router.use('', reviewGet);
 router.use('', reviewPost);

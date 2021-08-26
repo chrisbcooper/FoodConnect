@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-import users from './users';
-import posts from './posts';
-import groups from './groups';
-import auth from './auth';
-import yelp from './yelp';
-import review from './reviews';
-import restaurant from './restaurants';
+import users from './users/index.js';
+import posts from './posts/index.js';
+import groups from './groups/index.js';
+import auth from './auth/index.js';
+import yelp from './yelp/index.js';
+import review from './reviews/index.js';
+import restaurant from './restaurants/index.js';
 
 router.use('/users', users);
 router.use('/posts', posts);

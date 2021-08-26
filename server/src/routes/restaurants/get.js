@@ -1,9 +1,9 @@
 import express from 'express';
 import axios from 'axios';
 
-import config from '@app/config';
+import config from '../../config/index.js';
 
-import Restaurant from '@app/models/restaurant';
+import Restaurant from '../../models/restaurant.js';
 
 const router = express.Router();
 

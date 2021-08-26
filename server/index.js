@@ -1,11 +1,11 @@
-import config from '@app/config';
-import router from '@app/routes';
-import connectDB from '@app/config/db';
+import config from './src/config/index.js';
+import router from './src/routes/index.js';
+import connectDB from './src/config/db.js';
 
-const express = require('express');
+import express from 'express';
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const PORT = config.PORT;
 

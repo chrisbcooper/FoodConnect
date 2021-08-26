@@ -2,9 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 
-import User from '@app/models/user';
+import User from '../../models/user.js';
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
 // Get all users
 // Public endpoint

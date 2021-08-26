@@ -1,9 +1,9 @@
 import express from 'express';
 
-import Review from '@app/models/review';
-import User from '@app/models/user';
+import Review from '../../models/review.js';
+import User from '../../models/user.js';
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
 const router = express.Router();
 

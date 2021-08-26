@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-import yelpGet from './get';
+import yelpGet from './get.js';
 
 router.use('', yelpGet);
 

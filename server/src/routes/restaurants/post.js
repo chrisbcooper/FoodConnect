@@ -1,9 +1,9 @@
 import express from 'express';
 
-import User from '@app/models/user';
-import Restaurant from '@app/models/restaurant';
+import User from '../../models/user.js';
+import Restaurant from '../../models/restaurant.js';
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
 const router = express.Router();
 

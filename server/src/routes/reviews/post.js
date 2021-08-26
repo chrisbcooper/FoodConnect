@@ -1,13 +1,13 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 
-import { upload } from '@app/middleware/upload';
+import { upload } from '../../middleware/upload.js';
 
-import User from '@app/models/user';
-import Review from '@app/models/review';
-import Restaurant from '@app/models/restaurant';
+import User from '../../models/user.js';
+import Review from '../../models/review.js';
+import Restaurant from '../../models/restaurant.js';
 
-import auth from '@app/middleware';
+import auth from '../../middleware/index.js';
 
 const router = express.Router();
 

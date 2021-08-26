@@ -39,43 +39,44 @@ const Register = () => {
     };
 
     return (
-        <div>
-            Register
-            <>
-                <Form
-                    onSubmit={(event) => {
-                        event.preventDefault();
-                        handleSubmit(onSubmit)();
-                    }}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ textAlign: 'center', marginTop: 10 }}>
+                <h3>Register</h3>
+            </div>
+            <Form
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleSubmit(onSubmit)();
+                }}
+            >
+                <input type='submit' style={{ display: 'none' }} />
+                <Form.Group>
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control {...register('name', { required: true })} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control {...register('email', { required: true })} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type='password' {...register('password', { required: true })} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Profile Picture</Form.Label>
+                    <ImageInput image={image} setImage={setImage} fileInput={fileInput}></ImageInput>
+                </Form.Group>
+            </Form>
+            <HeaderDiv>
+                <SubmitButton
+                    onClick={handleSubmit((data) => {
+                        onSubmit(data);
+                    })}
+                    variant='primary'
                 >
-                    <Form.Group>
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control {...register('name', { required: true })} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control {...register('email', { required: true })} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type='password' {...register('password', { required: true })} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Profile Picture</Form.Label>
-                        <ImageInput image={image} setImage={setImage} fileInput={fileInput}></ImageInput>
-                    </Form.Group>
-                </Form>
-                <HeaderDiv>
-                    <SubmitButton
-                        onClick={handleSubmit((data) => {
-                            onSubmit(data);
-                        })}
-                        variant='primary'
-                    >
-                        Register
-                    </SubmitButton>
-                </HeaderDiv>
-            </>
+                    Register
+                </SubmitButton>
+            </HeaderDiv>
         </div>
     );
 };

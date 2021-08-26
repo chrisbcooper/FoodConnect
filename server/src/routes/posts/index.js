@@ -1,8 +1,8 @@
-var express = require('express');
+import express from 'express';
 const router = express.Router();
 
-import getPost from './get';
-import postPost from './post';
+import getPost from './get.js';
+import postPost from './post.js';
 
 router.use('', getPost);
 router.use('', postPost);

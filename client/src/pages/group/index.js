@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import groups, { followGroup, loadGroup, unfollowGroup } from '../../redux/groups';
+import { followGroup, loadGroup, unfollowGroup } from '../../redux/groups';
 
 import { RoundImage, Text, GhostUsers, Loader } from '../../components';
 import { deleteGroup } from '../../redux/groups';

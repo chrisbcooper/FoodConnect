@@ -3,17 +3,21 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
-        "start": "babel-node index.js",
-        "dev": "nodemon -r dotenv/config index.js --exec babel-node",
+        "start": "node index.js",
+        "dev": "nodemon -r dotenv/config index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@babel/core": "^7.15.0",
+        "@babel/node": "^7.14.9",
         "@babel/preset-env": "^7.15.0",
         "aws-sdk": "^2.968.0",
         "axios": "^0.21.1",
+        "babel-cli": "^6.26.0",
         "babel-node": "0.0.1-security",
         "babel-plugin-module-resolver": "^4.1.0",
         "babel-plugin-root-import": "^6.6.0",
@@ -34,8 +38,6 @@
         "yelp-fusion": "^3.0.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.15.0",
-        "@babel/node": "^7.14.9",
         "eslint": "^7.32.0",
         "eslint-config-google": "^0.14.0"
     }

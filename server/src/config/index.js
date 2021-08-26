@@ -10,5 +10,5 @@ export default {
     YELP_CLIENT_ID: process.env.YELP_CLIENT_ID,
     YELP_URL: process.env.YELP_URL,
     DB_USERNAME: process.env.DB_USERNAME,
-    DB_PASSWORD: process.env.DB_PASSWORD
-}
+    DB_PASSWORD: process.env.DB_PASSWORD,
+};
