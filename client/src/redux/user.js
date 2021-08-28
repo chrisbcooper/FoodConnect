@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import client, { setAuthToken } from '../api/client';
-import formClient from '../api/clientForm';
+import formClient, { setFormAuthToken } from '../api/clientForm';
 
 export const loadUser = createAsyncThunk('user/load', async () => {
     setAuthToken(localStorage.token);
@@ -42,6 +42,24 @@ export const login = createAsyncThunk('user/login', async ({ email, password }) 
 });
 
 export const logout = createAsyncThunk('user/logout', async () => {});
+
+export const editProfile = createAsyncThunk('user/edit', async ({ name, bio, image }) => {
+    setFormAuthToken(localStorage.token);
+    try {
+        const formData = new FormData();
+        if (bio) formData.append('bio', bio);
+        if (name) formData.append('name', name);
+        if (image) {
+            formData.append('image', image, image.name);
+        }
+
+        const res = await formClient.patch('/users', formData);
+        return res.data;
+    } catch (err) {
+        console.error(err.response.data);
+        throw err.response.data.errors;
+    }
+});
 
 export const userSlice = createSlice({
     name: 'user',
@@ -116,6 +134,20 @@ export const userSlice = createSlice({
             state.error = null;
             state.token = null;
             state.data = {};
+        },
+        [editProfile.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.error = null;
+            state.dada = action.payload;
+        },
+        [editProfile.pending]: (state, action) => {
+            state.error = null;
+            state.isLoading = true;
+        },
+        [editProfile.rejected]: (state, action) => {
+            state.error = action.payload;
+            state.isLoading = false;
+            state.isAuthenticated = false;
         },
     },
 });

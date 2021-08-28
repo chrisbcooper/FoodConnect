@@ -80,7 +80,7 @@ router.get('/me', auth, async (req, res) => {
             _id,
         })
             .select('-password -email')
-            .populate(['reviews.review']);
+            .populate(['reviews.review, groups.group']);
 
         if (!user) {
             res.status(400).json({
@@ -111,8 +111,6 @@ router.get('/:id', auth, async (req, res) => {
         })
             .select('-password -email')
             .populate(['groups.group', 'reviews.review']);
-
-        console.log(user);
 
         if (!user) {
             res.status(400).json({

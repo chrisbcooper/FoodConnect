@@ -100,7 +100,7 @@ const Profile = () => {
                     <FadeIn childClassName='col' className='row'>
                         {profile.groups.map((item, index) => (
                             <GridCard key={index}>
-                                <StyledLink to={`/groups/${item.group_id}`}>
+                                <StyledLink to={`/groups/${item.group._id}`}>
                                     {item.group.image ? (
                                         <CardImage variant='top' src={item.group.image} />
                                     ) : (

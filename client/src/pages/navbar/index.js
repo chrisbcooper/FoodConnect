@@ -28,7 +28,7 @@ const N = () => {
                 <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                 {isAuthenticated && (
                     <Navbar.Collapse id='responsive-navbar-nav'>
-                        <Nav className='mr-auto'>
+                        <Nav className='me-auto'>
                             <Nav.Link eventKey={1} as={NavLink} to='/profiles'>
                                 Profiles
                             </Nav.Link>
@@ -47,6 +47,11 @@ const N = () => {
                             <Nav.Link eventKey={1} as={NavLink} to='/reviews'>
                                 Reviews
                             </Nav.Link>
+                            <Nav.Link eventKey={1} as={NavLink} to='/me'>
+                                Me
+                            </Nav.Link>
+                        </Nav>
+                        <Nav>
                             <Nav.Link eventKey={1} onClick={(event) => dispatch(logout())}>
                                 Logout
                             </Nav.Link>

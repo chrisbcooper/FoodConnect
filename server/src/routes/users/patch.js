@@ -17,12 +17,11 @@ router.patch('/', [auth, upload.single('image')], async (req, res) => {
     try {
         const _id = req.user.id;
 
-        const { bio, image, name } = body;
+        const { bio, name } = body;
 
         const newFields = {};
 
         if (bio) newFields.bio = bio;
-        if (image) newFields.image = image;
         if (name) newFields.name = name;
         if (req.file) newFields.image = req.file.location;
 

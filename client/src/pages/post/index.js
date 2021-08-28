@@ -138,8 +138,36 @@ const Post = () => {
                         {post.comments &&
                             post.comments.map((item, index) => {
                                 return (
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }} key={index}>
-                                        {item.text}
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            height: 40,
+                                        }}
+                                        key={index}
+                                    >
+                                        <div
+                                            style={{
+                                                backgroundColor: 'white',
+                                                width: '95%',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                verticalAlign: 'center',
+                                                display: 'table',
+                                                borderRadius: '5%',
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    display: 'table-cell',
+                                                    verticalAlign: 'middle',
+                                                    padding: 10,
+                                                }}
+                                            >
+                                                {item.text}
+                                            </p>
+                                        </div>
                                         {item.user === data._id && (
                                             <Button
                                                 onClick={(event) =>

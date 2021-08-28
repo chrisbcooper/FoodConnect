@@ -10,10 +10,13 @@ import auth from '../../middleware/index.js';
 // Private
 
 router.get('/', auth, async (req, res) => {
+    const _id = req.user.id;
     try {
-        const user = await User.findById(req.user.id, {
-            password: 0,
-        });
+        const user = await User.findOne({
+            _id,
+        })
+            .select('-password -email')
+            .populate(['groups.group', 'reviews.review']);
         res.json(user);
     } catch (err) {
         console.error(err.message);
