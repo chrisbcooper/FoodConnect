@@ -49,6 +49,34 @@ const Review = () => {
     if (review.user && data) {
         isCurrUser = review.user === data._id;
     }
+
+    const showDate = (date) => {
+        const currDate = new Date(date);
+        const seconds = Math.floor((new Date() - currDate.getTime()) / 1000);
+
+        let interval = seconds / 31536000;
+
+        if (interval > 1) {
+            return Math.floor(interval) + ' years go';
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+            return Math.floor(interval) + ' months ago';
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+            return Math.floor(interval) + ' days ago';
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+            return Math.floor(interval) + ' hours ago';
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+            return Math.floor(interval) + ' minutes ago';
+        }
+        return Math.floor(seconds) + ' seconds ago';
+    };
     return (
         <div>
             <FlexDiv>
@@ -100,10 +128,12 @@ const Review = () => {
                     </div>
                     <Stars stars={review.stars} />
                     <div style={{ height: 15 }} />
+                    <p style={{ color: 'grey' }}>
+                        Created by {review.user.name} {showDate(review.createdAt)}
+                    </p>
                     <p>{review.text}</p>
                 </div>
             </FlexDiv>
-
             {isCurrUser && (
                 <Button
                     onClick={async (event) => {

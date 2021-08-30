@@ -137,10 +137,12 @@ const Post = () => {
                                     </Button>
                                 </div>
                             </div>
+                            <p style={{ color: 'grey' }}>
+                                Created by {post.user.name} {showDate(post.createdAt)}
+                            </p>
                             <p>{post.caption}</p>
                         </div>
                     </FlexDiv>
-
                     {commentForm && (
                         <div style={{ textAlign: 'center' }}>
                             <Form
