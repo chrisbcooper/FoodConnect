@@ -4,7 +4,7 @@ import { deleteReview, likeReview, loadReview, unlikeReview } from '../../redux/
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Text, Loader } from '../../components';
+import { Text, Loader, Stars } from '../../components';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -98,6 +98,8 @@ const Review = () => {
                         <div style={{ width: 10 }} />
                         {review.likes && review.likes.length} likes
                     </div>
+                    <Stars stars={review.stars} />
+                    <div style={{ height: 15 }} />
                     <p>{review.text}</p>
                 </div>
             </FlexDiv>
