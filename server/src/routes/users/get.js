@@ -54,7 +54,14 @@ router.get('/following', auth, async (req, res) => {
                 email: 0,
                 password: 0,
             }
-        );
+        ).populate([
+            'groups.group',
+            'reviews.review',
+            'wishlist.restaurant',
+            'liked_restaurants.restaurant',
+            'visited_restaurants.restaurant',
+            'posts.post',
+        ]);
 
         return res.json(users);
     } catch (err) {
@@ -80,7 +87,14 @@ router.get('/me', auth, async (req, res) => {
             _id,
         })
             .select('-password -email')
-            .populate(['reviews.review, groups.group']);
+            .populate([
+                'groups.group',
+                'reviews.review',
+                'wishlist.restaurant',
+                'liked_restaurants.restaurant',
+                'visited_restaurants.restaurant',
+                'posts.post',
+            ]);
 
         if (!user) {
             res.status(400).json({
@@ -110,7 +124,14 @@ router.get('/:id', auth, async (req, res) => {
             _id,
         })
             .select('-password -email')
-            .populate(['groups.group', 'reviews.review']);
+            .populate([
+                'groups.group',
+                'reviews.review',
+                'wishlist.restaurant',
+                'liked_restaurants.restaurant',
+                'visited_restaurants.restaurant',
+                'posts.post',
+            ]);
 
         if (!user) {
             res.status(400).json({

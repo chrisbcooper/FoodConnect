@@ -16,7 +16,14 @@ router.get('/', auth, async (req, res) => {
             _id,
         })
             .select('-password -email')
-            .populate(['groups.group', 'reviews.review']);
+            .populate([
+                'groups.group',
+                'reviews.review',
+                'wishlist.restaurant',
+                'liked_restaurants.restaurant',
+                'visited_restaurants.restaurant',
+                'posts.post',
+            ]);
         res.json(user);
     } catch (err) {
         console.error(err.message);

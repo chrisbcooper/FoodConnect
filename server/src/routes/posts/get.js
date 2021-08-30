@@ -11,7 +11,7 @@ import User from '../../models/user.js';
 
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find().populate(['comments.user', 'user']);
         res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -32,7 +32,7 @@ router.get('/me', auth, async (req, res) => {
     const _id = req.user.id;
 
     try {
-        const posts = await Post.find({ user: _id });
+        const posts = await Post.find({ user: _id }).populate(['comments.user', 'user']);
         return res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -71,7 +71,7 @@ router.get('/following', auth, async (req, res) => {
             return item.following_id;
         });
 
-        const posts = await Post.find({ user: following });
+        const posts = await Post.find({ user: following }).populate(['comments.user', 'user']);
         return res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -92,7 +92,7 @@ router.get('/:id', auth, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const posts = await Post.findOne({ _id: id });
+        const posts = await Post.findOne({ _id: id }).populate(['comments.user', 'user']);
         return res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -113,7 +113,7 @@ router.get('/user/:id', auth, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const posts = await Post.find({ user: id });
+        const posts = await Post.find({ user: id }).populate(['comments.user', 'user']);
         return res.json(posts);
     } catch (err) {
         console.error(err.message);

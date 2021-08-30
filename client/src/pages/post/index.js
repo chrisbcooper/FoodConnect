@@ -138,7 +138,7 @@ const Post = () => {
                                 </div>
                             </div>
                             <p style={{ color: 'grey' }}>
-                                Created by {post.user.name} {showDate(post.createdAt)}
+                                Created by {post.user && post.user.name} {showDate(post.createdAt)}
                             </p>
                             <p>{post.caption}</p>
                         </div>

@@ -167,7 +167,7 @@ router.post('/:id/like', auth, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const post = await Post.findById(id);
+        const post = await Post.findById(id).populate(['comments.user', 'user']);
 
         if (!post) {
             res.status(400).json({
@@ -236,7 +236,7 @@ router.post('/:id/unlike', auth, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const post = await Post.findById(id);
+        const post = await Post.findById(id).populate(['comments.user', 'user']);
 
         if (!post) {
             return res.status(400).json({
@@ -291,7 +291,7 @@ router.post('/:id/comment', [auth, body('text', 'Text is required').not().isEmpt
     const { text } = req.body;
 
     try {
-        const post = await Post.findById(id);
+        const post = await Post.findById(id).populate(['comments.user', 'user']);
 
         if (!post) {
             return res.status(400).json({
@@ -353,7 +353,7 @@ router.delete('/:id/comment/:comment_id', auth, async (req, res) => {
     const { id, comment_id } = req.params;
 
     try {
-        const post = await Post.findById(id);
+        const post = await Post.findById(id).populate(['comments.user', 'user']);
 
         if (!post) {
             return res.status(400).json({

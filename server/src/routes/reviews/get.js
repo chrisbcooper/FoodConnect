@@ -12,7 +12,10 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const reviews = await Review.find().sort({ createdAt: -1 }).limit(20).populate(['restaurant_id']);
+        const reviews = await Review.find()
+            .sort({ createdAt: -1 })
+            .limit(20)
+            .populate(['restaurant_id', 'user', 'likes.like']);
 
         if (!reviews) {
             res.status(400).json({
@@ -57,7 +60,7 @@ router.get('/following', auth, async (req, res) => {
         })
             .sort({ createdAt: -1 })
             .limit(20)
-            .populate(['restaurant_id']);
+            .populate(['restaurant_id', 'user', 'likes.like']);
 
         return res.json(reviews);
     } catch (err) {
@@ -79,7 +82,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const review = await Review.findOne({ _id: id });
+        const review = await Review.findOne({ _id: id }).populate(['restaurant_id', 'user', 'likes.like']);
 
         if (!review) {
             res.status(400).json({

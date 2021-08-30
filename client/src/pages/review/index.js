@@ -129,7 +129,7 @@ const Review = () => {
                     <Stars stars={review.stars} />
                     <div style={{ height: 15 }} />
                     <p style={{ color: 'grey' }}>
-                        Created by {review.user.name} {showDate(review.createdAt)}
+                        Created by {review.user && review.user.name} {showDate(review.createdAt)}
                     </p>
                     <p>{review.text}</p>
                 </div>

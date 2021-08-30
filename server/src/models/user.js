@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema(
             {
                 restaurant: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: 'restaurant',
+                    ref: 'Restaurant',
                     required: true,
                 },
             },
@@ -90,7 +90,7 @@ const userSchema = new mongoose.Schema(
             {
                 restaurant: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: 'restaurant',
+                    ref: 'Restaurant',
                     required: true,
                 },
             },
@@ -99,7 +99,7 @@ const userSchema = new mongoose.Schema(
             {
                 restaurant: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: 'restaurant',
+                    ref: 'Restaurant',
                     required: true,
                 },
             },
