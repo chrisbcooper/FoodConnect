@@ -22,7 +22,7 @@ const PostCreate = () => {
     const { register, handleSubmit } = useForm();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { group, isLoading, error } = useSelector((state) => state.group);
+    const { isLoading, error } = useSelector((state) => state.group);
     const [image, setImage] = useState();
     const fileInput = useRef(null);
     const { id } = useParams();
@@ -58,7 +58,9 @@ const PostCreate = () => {
 
     return (
         <>
-            CREating a post for {id && group.name}
+            <div style={{ textAlign: 'center', marginTop: 10 }}>
+                <h3>Creating a post</h3>
+            </div>
             <Form>
                 <Form.Group>
                     <Form.Label>Caption</Form.Label>

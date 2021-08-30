@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteReview, likeReview, loadReview, unlikeReview } from '../../redux/reviews';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Text, Loader } from '../../components';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -53,7 +53,22 @@ const Review = () => {
         <div>
             <FlexDiv>
                 <div style={{ textAlign: 'center', marginBottom: 20 }}>
-                    {review.image && <Image src={review.image} alt='rest' />}
+                    {review.image ? (
+                        <Image src={review.image} alt='rest' />
+                    ) : (
+                        <div
+                            style={{
+                                height: '15rem',
+                                width: '15rem',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                textAlign: 'center',
+                                display: 'flex',
+                            }}
+                        >
+                            <FontAwesomeIcon style={{ margin: 'auto' }} size={'9x'} icon={faUser} />
+                        </div>
+                    )}
                     <div
                         style={{
                             display: 'flex',

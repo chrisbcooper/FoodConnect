@@ -62,6 +62,34 @@ const Post = () => {
         }
     };
 
+    const showDate = (date) => {
+        const currDate = new Date(date);
+        const seconds = Math.floor((new Date() - currDate.getTime()) / 1000);
+
+        let interval = seconds / 31536000;
+
+        if (interval > 1) {
+            return Math.floor(interval) + ' years go';
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+            return Math.floor(interval) + ' months ago';
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+            return Math.floor(interval) + ' days ago';
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+            return Math.floor(interval) + ' hours ago';
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+            return Math.floor(interval) + ' minutes ago';
+        }
+        return Math.floor(seconds) + ' seconds ago';
+    };
+
     return (
         <div>
             {post && (
@@ -144,6 +172,7 @@ const Post = () => {
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                             height: 40,
+                                            marginBottom: 20,
                                         }}
                                         key={index}
                                     >
@@ -151,13 +180,32 @@ const Post = () => {
                                             style={{
                                                 backgroundColor: 'white',
                                                 width: '95%',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
+                                                alignItems: 'start',
+                                                justifyContent: 'flex-start',
                                                 verticalAlign: 'center',
-                                                display: 'table',
                                                 borderRadius: '5%',
                                             }}
                                         >
+                                            <p
+                                                style={{
+                                                    display: 'table-cell',
+                                                    verticalAlign: 'middle',
+                                                    padding: 10,
+                                                    color: 'grey',
+                                                }}
+                                            >
+                                                {showDate(item.date)}
+                                            </p>
+                                            <p
+                                                style={{
+                                                    display: 'table-cell',
+                                                    verticalAlign: 'middle',
+                                                    padding: 10,
+                                                    color: 'grey',
+                                                }}
+                                            >
+                                                {item.user.name}
+                                            </p>
                                             <p
                                                 style={{
                                                     display: 'table-cell',
@@ -168,7 +216,7 @@ const Post = () => {
                                                 {item.text}
                                             </p>
                                         </div>
-                                        {item.user === data._id && (
+                                        {item.user._id === data._id && (
                                             <Button
                                                 onClick={(event) =>
                                                     dispatch(deleteCommentPost({ id, comment_id: item._id }))

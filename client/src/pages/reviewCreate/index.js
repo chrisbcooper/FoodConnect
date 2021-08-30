@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { Text, ImageInput, Loader } from '../../components';
+import { Text, ImageInput, Loader, Stars } from '../../components';
 import { reviewCreate } from '../../redux/reviews';
 import { useHistory, useParams } from 'react-router-dom';
 import { loadRestaurant } from '../../redux/restaurants';
@@ -26,6 +26,7 @@ const ReviewCreate = () => {
     const [image, setImage] = useState();
     const fileInput = useRef(null);
     const { id } = useParams();
+    const [starsTotal, setStarsTotal] = useState(0);
 
     useEffect(() => {
         dispatch(loadRestaurant({ id }));
@@ -42,7 +43,7 @@ const ReviewCreate = () => {
             reviewCreate({
                 text: data.text,
                 restaurant: id,
-                stars: data.stars,
+                stars: starsTotal,
                 image,
             })
         );
@@ -53,16 +54,23 @@ const ReviewCreate = () => {
 
     return (
         <>
-            CREating a review for {restaurant.name}
+            <div style={{ textAlign: 'center', marginTop: 10 }}>
+                <h3>Creating a review for</h3>
+                <h4>{restaurant.name}</h4>
+            </div>
             <Form>
                 <Form.Group>
                     <Form.Label>Text</Form.Label>
                     <Form.Control {...register('text', { required: true })} />
                 </Form.Group>
+                <div style={{ height: 20 }} />
                 <Form.Group>
                     <Form.Label>Stars</Form.Label>
-                    <Form.Control {...register('stars', { required: true })} />
+                    <div>
+                        <Stars stars={starsTotal} form={true} setStars={setStarsTotal} />
+                    </div>
                 </Form.Group>
+                <div style={{ height: 20 }} />
                 <Form.Group>
                     <Form.Label>Group Image</Form.Label>
                     <ImageInput image={image} setImage={setImage} fileInput={fileInput}></ImageInput>
@@ -75,7 +83,7 @@ const ReviewCreate = () => {
                     })}
                     variant='primary'
                 >
-                    Submit Deal
+                    Submit Review
                 </SubmitButton>
             </HeaderDiv>
         </>

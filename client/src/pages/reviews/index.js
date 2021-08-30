@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadReviews } from '../../redux/reviews';
 import { Card } from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
-import { StyledLink, CardBody, GridCard, Loader, Text, CardImage } from '../../components';
+import { StyledLink, CardBody, GridCard, Loader, Text, CardImage, Stars } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -82,7 +82,11 @@ const Reviews = () => {
                                     <Card.Title>{item.text}</Card.Title>
                                 </CardBody>
                                 <CardBody>
-                                    <Card.Text>{item.stars}</Card.Text>
+                                    <Card.Text>
+                                        <div style={{ textAlign: 'center' }}>
+                                            <Stars stars={item.stars} outline />
+                                        </div>
+                                    </Card.Text>
                                 </CardBody>
                             </StyledLink>
                         </GridCard>

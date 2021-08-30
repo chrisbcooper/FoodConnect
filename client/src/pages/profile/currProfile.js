@@ -76,6 +76,7 @@ const Profile = () => {
                     </div>
                 </div>
             </TopDiv>
+            {console.log(data)}
             {data.groups && (
                 <div style={{ marginTop: 30 }}>
                     <TopDiv>
