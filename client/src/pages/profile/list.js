@@ -76,89 +76,73 @@ const List = () => {
             {type === 'groups' && profile.groups && (
                 <div style={{ marginTop: 30 }}>
                     <FadeIn childClassName='col' className='row'>
-                        {profile.groups.map((item, index) => {
-                            return (
-                                index < 5 && (
-                                    <GridCard key={index}>
-                                        <StyledLink to={`/groups/${item.group._id}`}>
-                                            {item.group.image ? (
-                                                <CardImage variant='top' src={item.group.image} />
-                                            ) : (
-                                                <div
-                                                    style={{
-                                                        height: '15rem',
-                                                        width: '15rem',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        textAlign: 'center',
-                                                        display: 'flex',
-                                                    }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        style={{ margin: 'auto' }}
-                                                        size={'9x'}
-                                                        icon={faUsers}
-                                                    />
-                                                </div>
-                                            )}
-                                            <CardBody>
-                                                <Card.Title>{item.group.name}</Card.Title>
-                                            </CardBody>
-                                            <CardBody>
-                                                <Card.Text>{item.group.bio}</Card.Text>
-                                            </CardBody>
-                                        </StyledLink>
-                                    </GridCard>
-                                )
-                            );
-                        })}
+                        {profile.groups.map((item, index) => (
+                            <GridCard key={index}>
+                                <StyledLink to={`/groups/${item.group._id}`}>
+                                    {item.group.image ? (
+                                        <CardImage variant='top' src={item.group.image} />
+                                    ) : (
+                                        <div
+                                            style={{
+                                                height: '15rem',
+                                                width: '15rem',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                textAlign: 'center',
+                                                display: 'flex',
+                                            }}
+                                        >
+                                            <FontAwesomeIcon style={{ margin: 'auto' }} size={'9x'} icon={faUsers} />
+                                        </div>
+                                    )}
+                                    <CardBody>
+                                        <Card.Title>{item.group.name}</Card.Title>
+                                    </CardBody>
+                                    <CardBody>
+                                        <Card.Text>{item.group.bio}</Card.Text>
+                                    </CardBody>
+                                </StyledLink>
+                            </GridCard>
+                        ))}
                     </FadeIn>
                 </div>
             )}
             {type === 'posts' && profile.posts && (
                 <div style={{ marginTop: 30 }}>
                     <FadeIn childClassName='col' className='row'>
-                        {profile.posts.map((item, index) => {
-                            return (
-                                index < 5 && (
-                                    <GridCard key={index}>
-                                        <StyledLink to={`/posts/${item.post._id}`}>
-                                            {item.post.image ? (
-                                                <CardImage variant='top' src={item.post.image} />
-                                            ) : (
-                                                <div
-                                                    style={{
-                                                        height: '15rem',
-                                                        width: '15rem',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        textAlign: 'center',
-                                                        display: 'flex',
-                                                    }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        style={{ margin: 'auto' }}
-                                                        size={'9x'}
-                                                        icon={faUsers}
-                                                    />
-                                                </div>
-                                            )}
-                                            <CardBody>
-                                                <Card.Text>{item.post.caption}</Card.Text>
-                                            </CardBody>
-                                        </StyledLink>
-                                    </GridCard>
-                                )
-                            );
-                        })}
+                        {profile.posts.map((item, index) => (
+                            <GridCard key={index}>
+                                <StyledLink to={`/posts/${item.post._id}`}>
+                                    {item.post.image ? (
+                                        <CardImage variant='top' src={item.post.image} />
+                                    ) : (
+                                        <div
+                                            style={{
+                                                height: '15rem',
+                                                width: '15rem',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                textAlign: 'center',
+                                                display: 'flex',
+                                            }}
+                                        >
+                                            <FontAwesomeIcon style={{ margin: 'auto' }} size={'9x'} icon={faUsers} />
+                                        </div>
+                                    )}
+                                    <CardBody>
+                                        <Card.Text>{item.post.caption}</Card.Text>
+                                    </CardBody>
+                                </StyledLink>
+                            </GridCard>
+                        ))}
                     </FadeIn>
                 </div>
             )}
             {type === 'visited' && profile.visited_restaurants && (
                 <div style={{ marginTop: 30 }}>
                     <FadeIn childClassName='col' className='row'>
-                        {profile.visited_restaurants.map((item, index) => {
-                            return (
+                        {profile.visited_restaurants.map(
+                            (item, index) =>
                                 index < 5 && (
                                     <GridCard key={index}>
                                         <StyledLink to={`/restaurants/${item.restaurant.yelp_id}`}>
@@ -209,68 +193,58 @@ const List = () => {
                                         </StyledLink>
                                     </GridCard>
                                 )
-                            );
-                        })}
+                        )}
                     </FadeIn>
                 </div>
             )}
             {type === 'wishlist' && profile.wishlist && (
                 <div style={{ marginTop: 30 }}>
                     <FadeIn childClassName='col' className='row'>
-                        {profile.wishlist.map((item, index) => {
-                            return (
-                                index < 5 && (
-                                    <GridCard key={index}>
-                                        <StyledLink to={`/restaurants/${item.restaurant.yelp_id}`}>
-                                            {item.restaurant.photos.length ? (
-                                                <CardImage variant='top' src={item.restaurant.photos[0]} />
-                                            ) : (
-                                                <div
-                                                    style={{
-                                                        height: '15rem',
-                                                        width: '15rem',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        textAlign: 'center',
-                                                        display: 'flex',
-                                                    }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        style={{ margin: 'auto' }}
-                                                        size={'9x'}
-                                                        icon={faUsers}
-                                                    />
-                                                </div>
-                                            )}
-                                            <CardBody>
-                                                <Card.Title>{item.restaurant.name}</Card.Title>
-                                            </CardBody>
-                                            <div
-                                                style={{
-                                                    justifyContent: 'space-between',
-                                                    flexDirection: 'row',
-                                                    display: 'flex',
-                                                }}
-                                            >
-                                                <div style={{ flex: 1 }}>
-                                                    {item.restaurant.reviews.length} <FontAwesomeIcon icon={faList} />
-                                                </div>
-                                                <div style={{ flex: 1 }}>
-                                                    {item.restaurant.likes.length} <FontAwesomeIcon icon={faHeart} />
-                                                </div>
-                                                <div style={{ flex: 1 }}>
-                                                    {item.restaurant.wishlist.length} <FontAwesomeIcon icon={faStar} />
-                                                </div>
-                                                <div style={{ flex: 1 }}>
-                                                    {item.restaurant.visited.length}{' '}
-                                                    <FontAwesomeIcon icon={faUtensils} />
-                                                </div>
-                                            </div>
-                                        </StyledLink>
-                                    </GridCard>
-                                )
-                            );
-                        })}
+                        {profile.wishlist.map((item, index) => (
+                            <GridCard key={index}>
+                                <StyledLink to={`/restaurants/${item.restaurant.yelp_id}`}>
+                                    {item.restaurant.photos.length ? (
+                                        <CardImage variant='top' src={item.restaurant.photos[0]} />
+                                    ) : (
+                                        <div
+                                            style={{
+                                                height: '15rem',
+                                                width: '15rem',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                textAlign: 'center',
+                                                display: 'flex',
+                                            }}
+                                        >
+                                            <FontAwesomeIcon style={{ margin: 'auto' }} size={'9x'} icon={faUsers} />
+                                        </div>
+                                    )}
+                                    <CardBody>
+                                        <Card.Title>{item.restaurant.name}</Card.Title>
+                                    </CardBody>
+                                    <div
+                                        style={{
+                                            justifyContent: 'space-between',
+                                            flexDirection: 'row',
+                                            display: 'flex',
+                                        }}
+                                    >
+                                        <div style={{ flex: 1 }}>
+                                            {item.restaurant.reviews.length} <FontAwesomeIcon icon={faList} />
+                                        </div>
+                                        <div style={{ flex: 1 }}>
+                                            {item.restaurant.likes.length} <FontAwesomeIcon icon={faHeart} />
+                                        </div>
+                                        <div style={{ flex: 1 }}>
+                                            {item.restaurant.wishlist.length} <FontAwesomeIcon icon={faStar} />
+                                        </div>
+                                        <div style={{ flex: 1 }}>
+                                            {item.restaurant.visited.length} <FontAwesomeIcon icon={faUtensils} />
+                                        </div>
+                                    </div>
+                                </StyledLink>
+                            </GridCard>
+                        ))}
                     </FadeIn>
                 </div>
             )}
