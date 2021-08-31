@@ -23,6 +23,8 @@ const FlexDiv = styled.div`
     flex-direction: row;
     justify-content: center;
     margin-top: 30px;
+    padding-top: 20px;
+    border-radius: 5%;
 `;
 
 const Post = () => {
@@ -95,7 +97,15 @@ const Post = () => {
             {post && (
                 <div>
                     <FlexDiv>
-                        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                        <div
+                            style={{
+                                textAlign: 'center',
+                                marginBottom: 20,
+                                backgroundColor: 'white',
+                                padding: 20,
+                                borderRadius: '3%',
+                            }}
+                        >
                             {post.image && <Image src={post.image} alt='rest' />}
                             <div
                                 style={{

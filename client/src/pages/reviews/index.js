@@ -16,6 +16,10 @@ const TopDiv = styled.div`
     align-items: center;
 `;
 
+const LongGridCard = styled(GridCard)`
+    height: 28rem;
+`;
+
 const LinkP = styled.p`
     margin-left: 15px;
     margin-top: auto;
@@ -60,7 +64,7 @@ const Reviews = () => {
             <FadeIn childClassName='col' child className='row'>
                 {reviews &&
                     reviews.map((item, index) => (
-                        <GridCard key={index}>
+                        <LongGridCard key={index}>
                             <StyledLink to={`/reviews/${item._id}`}>
                                 {item.image ? (
                                     <CardImage variant='top' src={item.image} />
@@ -83,13 +87,18 @@ const Reviews = () => {
                                 </CardBody>
                                 <CardBody>
                                     <Card.Text>
+                                        {item.user.name} reviewed {item.restaurant_id.name}
+                                    </Card.Text>
+                                </CardBody>
+                                <CardBody>
+                                    <Card.Text>
                                         <div style={{ textAlign: 'center' }}>
                                             <Stars stars={item.stars} outline />
                                         </div>
                                     </Card.Text>
                                 </CardBody>
                             </StyledLink>
-                        </GridCard>
+                        </LongGridCard>
                     ))}
             </FadeIn>
         </div>

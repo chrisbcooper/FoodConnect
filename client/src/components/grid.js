@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const RestaurantCard = styled(Card)`
     width: 15rem;
-    height: 21rem;
+    height: 23rem;
     margin: auto;
     margin-bottom: 
     -moz-box-shadow: 0 0 3px #ccc;
@@ -26,7 +26,7 @@ export const CardBody = styled(Card.Body)`
     text-overflow: ellipsis;
     display: -webkit-box;
     word-wrap: break-word;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-align: center;
     padding: 0;
@@ -35,7 +35,7 @@ export const CardBody = styled(Card.Body)`
 
 export const CardImage = styled(Card.Img)`
     height: 15rem;
-    width: 15rem;
+    width: 14.9rem;
 `;
 
 export const StyledLink = styled(Link)`

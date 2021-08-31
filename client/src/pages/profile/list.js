@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { followProfile, loadProfile, unfollowProfile } from '../../redux/profiles';
-import { Redirect, useParams } from 'react-router-dom';
-import { Button, Card } from 'react-bootstrap';
+import { loadProfile } from '../../redux/profiles';
+import { loadUser } from '../../redux/user';
+import { Card } from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faHeart, faStar, faUtensils, faUsers, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import { RoundImage, GhostUser, Loader, GridCard, CardBody, StyledLink, CardImage, Stars } from '../../components';
+import { Loader, GridCard, CardBody, StyledLink, CardImage, Stars } from '../../components';
 import styled from 'styled-components';
+import { Link, useParams } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
+const FlexDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 30px;
+`;
 
 const TopDiv = styled.div`
     justify-content: space-between;
@@ -31,103 +37,69 @@ const LinkP = styled(Link)`
     }
 `;
 
-const Profile = () => {
+const List = () => {
     const dispatch = useDispatch();
-    const { profile, isLoading, error } = useSelector((state) => state.profile);
-    const { data } = useSelector((state) => state.user);
-    const { id } = useParams();
-    let currFollowing = false;
+    const { data, isLoading, error } = useSelector((state) => state.user);
+    const { profile, isLoading: profileLoading, error: profileError } = useSelector((state) => state.profile);
+    const { type, id } = useParams();
+    let currUser = false;
 
     useEffect(() => {
         dispatch(loadProfile({ id }));
+        dispatch(loadUser());
     }, [dispatch, id]);
 
     if (data && data._id === id) {
-        return <Redirect to='/me' />;
+        currUser = true;
     }
 
-    if (error) {
+    if (error || profileError) {
         return <text>Error!!</text>;
-    } else if (isLoading) {
+    } else if (isLoading || profileLoading) {
         return <Loader />;
     }
 
-    if (profile.followers && data)
-        currFollowing =
-            profile.followers.filter((follower) => follower.follower_id.toString() === data._id).length !== 0;
+    const topTextMe = () => {
+        if (type === 'posts' || type === 'reviews' || type === 'groups') {
+            return `All of my ${type}`;
+        }
+
+        if (type === 'visited') {
+            return 'All restaurants I have visited';
+        }
+        if (type === 'wishlist') {
+            return 'All restaurants on my wishlist';
+        }
+    };
+
+    const topTextNotMe = () => {
+        if (type === 'posts' || type === 'reviews' || type === 'groups') {
+            return `${profile && profile.name}'s ${type}`;
+        }
+
+        if (type === 'visited') {
+            return `All restaurants ${profile && profile.name} has visited`;
+        }
+        if (type === 'wishlist') {
+            return `All restaurants on ${profile && profile.name}'s wishlist`;
+        }
+    };
 
     return (
-        <div style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <TopDiv>
-                <div style={{ display: 'flex', flexDirection: 'flex-start' }}>
-                    {profile.image ? (
-                        <RoundImage style={{ marginRight: 25 }} variant={'top'} src={profile.image} />
-                    ) : (
-                        <GhostUser />
-                    )}
-                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <h2>{profile.name}</h2>
-                        <p>{profile.bio || 'bio'}</p>
-                        {currFollowing ? (
-                            <Button
-                                onClick={async (event) => {
-                                    dispatch(unfollowProfile({ id }));
-                                }}
-                            >
-                                Unfollow
-                            </Button>
-                        ) : (
-                            <Button
-                                onClick={async (event) => {
-                                    dispatch(followProfile({ id }));
-                                }}
-                            >
-                                Follow
-                            </Button>
-                        )}
-                    </div>
+        <div>
+            <FlexDiv>
+                <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                    <h3>{currUser ? topTextMe() : topTextNotMe()}</h3>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                            <h3>{data.followers && data.followers.length}</h3> <p>Followers</p>
-                        </div>
-                        <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                            <h3>{data.following && data.following.length}</h3> <p>Following</p>
-                        </div>
-                        <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                            <h3>{data.reviews && data.reviews.length}</h3> <p>Reviews</p>
-                        </div>
-                        <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                            <h3>{data.posts && data.posts.length}</h3> <p>Posts</p>
-                        </div>
-                        <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                            <h3>{data.visited_restaurants && data.visited_restaurants.length}</h3> <p>Visited</p>
-                        </div>
-                        <div style={{ textAlign: 'center', marginLeft: 20 }}>
-                            <h3>{data.wishlist && data.wishlist.length}</h3> <p>Wishlist</p>
-                        </div>
-                    </div>
-                </div>
-            </TopDiv>
-            {profile.groups && (
+            </FlexDiv>
+            {type === 'groups' && profile.groups && (
                 <div style={{ marginTop: 30 }}>
-                    <TopDiv>
-                        <div>
-                            <h3>Groups</h3>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/profiles/${profile._id}/groups`}>
-                                See All
-                            </LinkP>
-                        </div>
-                    </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {profile.groups.map((item, index) => {
                             return (
                                 index < 5 && (
                                     <GridCard key={index}>
-                                        <StyledLink to={`groups/${item.group._id}`}>
+                                        <StyledLink to={`/groups/${item.group._id}`}>
                                             {item.group.image ? (
                                                 <CardImage variant='top' src={item.group.image} />
                                             ) : (
@@ -162,18 +134,8 @@ const Profile = () => {
                     </FadeIn>
                 </div>
             )}
-            {profile.posts && (
+            {type === 'posts' && profile.posts && (
                 <div style={{ marginTop: 30 }}>
-                    <TopDiv>
-                        <div>
-                            <h3>Posts</h3>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/profiles/${profile._id}/posts`}>
-                                See All
-                            </LinkP>
-                        </div>
-                    </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {profile.posts.map((item, index) => {
                             return (
@@ -211,18 +173,8 @@ const Profile = () => {
                     </FadeIn>
                 </div>
             )}
-            {profile.visited_restaurants && (
+            {type === 'visited' && profile.visited_restaurants && (
                 <div style={{ marginTop: 30 }}>
-                    <TopDiv>
-                        <div>
-                            <h3>Visited</h3>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/profiles/${profile._id}/visited`}>
-                                See All
-                            </LinkP>
-                        </div>
-                    </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {profile.visited_restaurants.map((item, index) => {
                             return (
@@ -281,18 +233,8 @@ const Profile = () => {
                     </FadeIn>
                 </div>
             )}
-            {profile.wishlist && (
+            {type === 'wishlist' && profile.wishlist && (
                 <div style={{ marginTop: 30 }}>
-                    <TopDiv>
-                        <div>
-                            <h3>Wishlist</h3>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/profiles/${profile._id}/wishlist`}>
-                                See All
-                            </LinkP>
-                        </div>
-                    </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {profile.wishlist.map((item, index) => {
                             return (
@@ -351,18 +293,8 @@ const Profile = () => {
                     </FadeIn>
                 </div>
             )}
-            {profile.reviews && (
+            {type === 'reviews' && profile.reviews && (
                 <div style={{ marginTop: 30 }}>
-                    <TopDiv>
-                        <div>
-                            <h3>Reviews</h3>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/profiles/${profile._id}/reviews`}>
-                                See All
-                            </LinkP>
-                        </div>
-                    </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {profile.reviews.map((item, index) => {
                             return (
@@ -411,4 +343,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default List;

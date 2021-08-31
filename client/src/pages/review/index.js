@@ -81,6 +81,22 @@ const Review = () => {
         <div>
             <FlexDiv>
                 <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                    <h3>
+                        {review && review.user && review.user.name} created a review for{' '}
+                        {review && review.restaurant_id && review.restaurant_id.name}
+                    </h3>
+                </div>
+            </FlexDiv>
+            <FlexDiv>
+                <div
+                    style={{
+                        textAlign: 'center',
+                        marginBottom: 20,
+                        backgroundColor: 'white',
+                        padding: 20,
+                        borderRadius: '3%',
+                    }}
+                >
                     {review.image ? (
                         <Image src={review.image} alt='rest' />
                     ) : (
@@ -126,7 +142,7 @@ const Review = () => {
                         <div style={{ width: 10 }} />
                         {review.likes && review.likes.length} likes
                     </div>
-                    <Stars stars={review.stars} />
+                    <Stars stars={review.stars} outline />
                     <div style={{ height: 15 }} />
                     <p style={{ color: 'grey' }}>
                         Created by {review.user && review.user.name} {showDate(review.createdAt)}

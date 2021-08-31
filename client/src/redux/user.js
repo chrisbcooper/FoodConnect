@@ -78,7 +78,6 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             state.data = action.payload;
-            console.log(action.payload);
         },
         [loadUser.pending]: (state, action) => {
             state.error = null;

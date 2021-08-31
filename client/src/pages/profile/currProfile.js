@@ -18,16 +18,16 @@ const TopDiv = styled.div`
     width: 90%;
 `;
 
-// const LinkP = styled(Link)`
-//     margin-left: 15px;
-//     margin-top: auto;
-//     margin-bottom: auto;
-//     text-decoration: ${(props) => (props.selected ? 'underline' : 'none')};
-//     :hover {
-//         color: #ed1212;
-//         cursor: pointer;
-//     }
-// `;
+const LinkP = styled(Link)`
+    margin-left: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-decoration: ${(props) => (props.selected ? 'underline' : 'none')};
+    :hover {
+        color: #ed1212;
+        cursor: pointer;
+    }
+`;
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -96,11 +96,11 @@ const Profile = () => {
                         <div>
                             <h3>Groups</h3>
                         </div>
-                        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/user${data._id}/groups`}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <LinkP selected to={`/profiles/${data._id}/groups`}>
                                 See All
                             </LinkP>
-                        </div> */}
+                        </div>
                     </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {data.groups.map((item, index) => {
@@ -148,11 +148,11 @@ const Profile = () => {
                         <div>
                             <h3>Posts</h3>
                         </div>
-                        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/user/${data._id}/posts`}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <LinkP selected to={`/profiles/${data._id}/posts`}>
                                 See All
                             </LinkP>
-                        </div> */}
+                        </div>
                     </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {data.posts.map((item, index) => {
@@ -197,11 +197,11 @@ const Profile = () => {
                         <div>
                             <h3>Visited</h3>
                         </div>
-                        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/user/${data._id}/reviews`}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <LinkP selected to={`/profiles/${data._id}/visited`}>
                                 See All
                             </LinkP>
-                        </div> */}
+                        </div>
                     </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {data.visited_restaurants.map((item, index) => {
@@ -267,11 +267,11 @@ const Profile = () => {
                         <div>
                             <h3>Wishlist</h3>
                         </div>
-                        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/user/${data._id}/wishlist`}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <LinkP selected to={`/profiles/${data._id}/wishlist`}>
                                 See All
                             </LinkP>
-                        </div> */}
+                        </div>
                     </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {data.wishlist.map((item, index) => {
@@ -337,11 +337,11 @@ const Profile = () => {
                         <div>
                             <h3>Reviews</h3>
                         </div>
-                        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <LinkP selected to={`/user/${data._id}/reviews`}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <LinkP selected to={`/profiles/${data._id}/reviews`}>
                                 See All
                             </LinkP>
-                        </div> */}
+                        </div>
                     </TopDiv>
                     <FadeIn childClassName='col' className='row'>
                         {data.reviews.map((item, index) => {

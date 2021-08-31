@@ -31,6 +31,7 @@ import PostCreate from './postCreate';
 import GroupCreate from './groupCreate';
 import Profiles from './profiles';
 import EditProfile from './profile/editProfile';
+import List from './profile/list';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const App = () => {
                         <PrivateRoute exact path='/dashboard' component={Dashboard} />
                         <PrivateRoute exact path='/me' component={CurrProfile} />
                         <PrivateRoute exact path='/me/edit' component={EditProfile} />
+                        <PrivateRoute exact path='/profiles/:id/:type' component={List} />
                         <PrivateRoute exact path='/profiles/:id' component={Profile} />
                         <PrivateRoute exact path='/profiles' component={Profiles} />
                         <PrivateRoute exact path='/explore' component={Explore} />

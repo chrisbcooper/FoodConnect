@@ -151,7 +151,7 @@ const Restaurant = () => {
                             marginLeft: 20,
                         }}
                     >
-                        {restaurant.likes && restaurant.likes.length} visited
+                        {restaurant.likes && restaurant.likes.length} likes
                         {like ? (
                             <Button
                                 onClick={async (event) => {
@@ -177,7 +177,7 @@ const Restaurant = () => {
                                 alignItems: 'center',
                             }}
                         >
-                            {restaurant.reviews && restaurant.reviews.length}
+                            {restaurant.reviews && restaurant.reviews.length} reviews
                             <Button href={`/reviews/restaurant/${id}/create`}>Create a Review</Button>
                         </div>
                     </div>
