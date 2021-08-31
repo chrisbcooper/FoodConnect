@@ -18,25 +18,6 @@ const FlexDiv = styled.div`
     margin-top: 30px;
 `;
 
-const TopDiv = styled.div`
-    justify-content: space-between;
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    width: 90%;
-`;
-
-const LinkP = styled(Link)`
-    margin-left: 15px;
-    margin-top: auto;
-    margin-bottom: auto;
-    text-decoration: ${(props) => (props.selected ? 'underline' : 'none')};
-    :hover {
-        color: #ed1212;
-        cursor: pointer;
-    }
-`;
-
 const List = () => {
     const dispatch = useDispatch();
     const { data, isLoading, error } = useSelector((state) => state.user);
