@@ -9,7 +9,7 @@ import { faList, faHeart, faStar, faUtensils, faUsers, faUser } from '@fortaweso
 
 import { Loader, GridCard, CardBody, StyledLink, CardImage, Stars } from '../../components';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const FlexDiv = styled.div`
     display: flex;
