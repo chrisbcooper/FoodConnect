@@ -103,10 +103,10 @@ const Review = () => {
                         <div
                             style={{
                                 height: '15rem',
-                                width: '15rem',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 textAlign: 'center',
+                                flexDirection: 'row',
                                 display: 'flex',
                             }}
                         >
